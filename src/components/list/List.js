@@ -15,14 +15,14 @@ export default function List() {
 	const handleClick = (direction) => {
 		setIsMoved(true);
 		let distance = listRef.current.getBoundingClientRect().x - 50;
-		if (direction === 'left' && slideNumber > 0) {
+		if (direction === 'left' && slideNumber >= 1) {
 			setSlideNumber(slideNumber - 1);
-			listRef.current.style.transform = `translateX(${230 + distance}px)`;
+			listRef.current.style.transform = `translateX(${460 + distance}px)`;
 			if (slideNumber === 1) setIsMoved(false);
 		}
-		if (direction === 'right' && slideNumber < 4) {
+		if (direction === 'right' && slideNumber < 2) {
 			setSlideNumber(slideNumber + 1);
-			listRef.current.style.transform = `translateX(${-230 + distance}px)`;
+			listRef.current.style.transform = `translateX(${-460 + distance}px)`;
 		}
 	};
 
