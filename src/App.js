@@ -21,7 +21,7 @@ function App() {
 				</Route>
 
 				<Route exact path="/movies">
-					{user ? <Home type={'movies'} /> : <Redirect to="/login" />}
+					{user ? <Home type={'movie'} /> : <Redirect to="/login" />}
 				</Route>
 				<Route exact path="/series">
 					{user ? <Home type={'series'} /> : <Redirect to="/login" />}
