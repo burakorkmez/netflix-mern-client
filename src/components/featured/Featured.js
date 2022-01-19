@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import './featured.scss';
 
-export default function Featured({ type }) {
+export default function Featured({ type, handleChange }) {
 	const [content, setContent] = useState({});
 
 	useEffect(() => {
@@ -28,27 +28,21 @@ export default function Featured({ type }) {
 			{type && (
 				<div className="category">
 					<span>{type === 'movies' ? 'Movies' : 'Series'}</span>
-					<select name="genre" id="genre">
-						<option>Genre</option>
-						<option value="adventure">Adventure</option>
-						<option value="comedy">Comedy</option>
+					<select
+						name="genre"
+						id="genre"
+						onChange={(e) => handleChange(e.target.value)}
+					>
+						<option value="">Genre</option>
+						<option value="Action">Action</option>
+						<option value="Comedy">Comedy</option>
 						<option value="crime">Crime</option>
-						<option value="fantasy">Fantasy</option>
-						<option value="historical">Historical</option>
-						<option value="horror">Horror</option>
-						<option value="romance">Romance</option>
-						<option value="sci-fi">Sci-fi</option>
-						<option value="thriller">Thriller</option>
-						<option value="western">Western</option>
-						<option value="animation">Animation</option>
-						<option value="drama">Drama</option>
-						<option value="documentary">Documentary</option>
 					</select>
 				</div>
 			)}
 			<img src={content.img} alt="" />
 			<div className="info">
-				<img src={content.imgTitle} alt="" />
+				<h1>{content.title}</h1>
 				<span className="desc">{content.desc}</span>
 				<div className="buttons">
 					<button className="play">
