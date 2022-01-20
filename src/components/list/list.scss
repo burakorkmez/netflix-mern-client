@@ -1,48 +1,88 @@
 .list {
 	width: 100%;
-	margin-top: 10px;
+	height: 120px;
+	margin: 80px 0;
+	padding: 0px 20px;
+	margin-top: 40px;
 
 	.listTitle {
 		color: white;
 		font-size: 20px;
 		font-weight: 500;
-		margin-left: 50px;
+		margin: 20px 0;
+		text-transform: uppercase;
 	}
 
-	.wrapper {
-		position: relative;
+	.slider-item-wraper {
+		width: 100%;
+		height: 100%;
+		flex: 1;
 
-		button {
-			background-color: transparent;
-			border: none;
-		}
-		.sliderArrow {
-			width: 50px;
-			height: 100%;
-			background-color: rgb(22, 22, 22, 0.5);
-			color: white;
-			position: absolute;
-			z-index: 99;
-			top: 0;
-			bottom: 0;
-			margin: auto;
-			cursor: pointer;
+		// & .innerContext {
+		// 	position: absolute;
+		// 	top: 0;
+		// 	left: 0;
+		// 	z-index: 10;
+		// 	width: 100%;
+		// 	height: 100%;
+		// 	background: white;
 
-			&.left {
-				left: 0;
-			}
-
-			&.right {
-				right: 0;
-			}
-		}
-		.container {
-			margin-left: 50px;
-			display: flex;
-			margin-top: 10px;
-			width: max-content;
-			transform: translateX(0px);
-			transition: all 0.5s ease-in;
-		}
+		// 	& img {
+		// 		height: 50%;
+		// 	}
+		// }
 	}
+}
+
+.swiper {
+	width: 100%;
+	height: 100%;
+}
+
+.swiper-slide {
+	text-align: center;
+	font-size: 18px;
+	background: #fff;
+
+	border-radius: 13px;
+	/* Center slide text vertically */
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	-webkit-justify-content: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	align-items: stretch;
+	transition: all 1s;
+
+	& img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	&:hover {
+		// transform: scale(1.3);
+		// width: 450px !important;
+		// height: 450px !important;
+	}
+}
+
+.img-wrapper img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+.img-wrapper {
+	width: 100%;
+	height: 100%;
+
+	border-radius: 10px;
 }

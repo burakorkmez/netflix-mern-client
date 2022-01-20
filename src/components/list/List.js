@@ -1,54 +1,88 @@
-import {
-	ArrowBackIosOutlined,
-	ArrowForwardIosOutlined,
-} from '@material-ui/icons';
-import { useRef, useState } from 'react';
-import ListItem from '../listItem/ListItem';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+
 import './list.scss';
 
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+
+// import Swiper core and required modules
+import SwiperCore, { Pagination, Navigation } from 'swiper';
+import { Swiper } from 'swiper/react';
+import { SwiperSlide } from 'swiper/react';
+
+// install Swiper modules
+SwiperCore.use([Pagination, Navigation]);
+
 export default function List({ list }) {
-	const [isMoved, setIsMoved] = useState(false);
-	const [slideNumber, setSlideNumber] = useState(0);
+	const [movies, setMovies] = useState([]);
 
-	const listRef = useRef();
+	useEffect(() => {
+		list.content.map((item, i) => {
+			const getMovie = async () => {
+				try {
+					const res = await axios.get('movies/find/' + item, {
+						headers: {
+							token:
+								'Bearer ' +
+								JSON.parse(localStorage.getItem('user')).accessToken,
+						},
+					});
+					setMovies((prev) => {
+						return [...prev, res.data];
+					});
+				} catch (err) {
+					console.log(err);
+				}
+			};
+			getMovie();
+		});
+	}, [list.content]);
 
-	const handleClick = (direction) => {
-		setIsMoved(true);
-		let distance = listRef.current.getBoundingClientRect().x - 50;
-		if (direction === 'left' && slideNumber >= 1) {
-			setSlideNumber(slideNumber - 1);
-			listRef.current.style.transform = `translateX(${460 + distance}px)`;
-			if (slideNumber === 1) setIsMoved(false);
-		}
-		if (direction === 'right' && slideNumber < 2) {
-			setSlideNumber(slideNumber + 1);
-			listRef.current.style.transform = `translateX(${-460 + distance}px)`;
-		}
-	};
-
+	// if (movies.length === 0) return <h1>loading...</h1>;
 	return (
 		<div className="list">
-			<span className="listTitle">{list.title}</span>
-			<div className="wrapper">
-				(
-				<ArrowBackIosOutlined
-					className="sliderArrow left"
-					onClick={() => handleClick('left')}
-					style={{ display: !isMoved && 'none' }}
-				/>
-				)
-				<div className="container" ref={listRef}>
-					{list.content.map((item, i) => (
-						<ListItem index={i} item={item} key={i} />
-					))}
-				</div>
-				(
-				<ArrowForwardIosOutlined
-					className="sliderArrow right"
-					onClick={() => handleClick('right')}
-				/>
-				)
-			</div>
+			<h1 className="listTitle">{list.title}</h1>
+			<Swiper
+				freeMode={true}
+				className="mySwiper"
+				breakpoints={{
+					640: {
+						slidesPerView: 2,
+						spaceBetween: 20,
+					},
+					768: {
+						slidesPerView: 3,
+						spaceBetween: 40,
+					},
+					1024: {
+						slidesPerView: 4,
+						spaceBetween: 30,
+					},
+				}}
+			>
+				{movies.map((movie, i) => (
+					// <ListItem index={i} item={item} key={i} />
+					<>
+						<SwiperSlide key={i}>
+							<div className="slider-item-wraper">
+								<Link to={`/watch/${i}`} className="link">
+									{/* <div className="img-wrapper"> */}
+									<img src={movie.img} alt="" className="swiperImg" />
+									{/* </div> */}
+									{/* <div className="innerContext">
+										<img src={movie.img} alt="" />
+
+										<h1>Breaking bad</h1>
+									</div> */}
+								</Link>
+							</div>
+						</SwiperSlide>
+					</>
+				))}
+			</Swiper>
 		</div>
 	);
 }
