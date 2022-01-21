@@ -12,7 +12,7 @@ export default function Featured({ type, handleChange }) {
 				const res = await axios.get(`/movies/random?type=${type}`, {
 					headers: {
 						token:
-							'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTQ0MGYxN2ZmMzk5MzM3Yzk1M2UyZCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY0MjM0ODk0OSwiZXhwIjoxNjQyNzgwOTQ5fQ.IVJ4ZKmnKHRxX4gy6ltxDl2A39_iN5a1L1tox1O9NmI',
+							'Bearer ' + JSON.parse(localStorage.getItem('user')).accessToken,
 					},
 				});
 				setContent(res.data[0]);
@@ -27,7 +27,7 @@ export default function Featured({ type, handleChange }) {
 		<div className="featured">
 			{type && (
 				<div className="category">
-					<span>{type === 'movies' ? 'Movies' : 'Series'}</span>
+					<span>{type === 'movie' ? 'Movies' : 'Series'}</span>
 					<select
 						name="genre"
 						id="genre"
@@ -40,7 +40,7 @@ export default function Featured({ type, handleChange }) {
 					</select>
 				</div>
 			)}
-			<img src={content.img} alt="" />
+			<img src={content.img} className="featuredImg" alt="" />
 			<div className="info">
 				<h1>{content.title}</h1>
 				<span className="desc">{content.desc}</span>

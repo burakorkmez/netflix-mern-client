@@ -2,6 +2,13 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
+import {
+	PlayArrow,
+	Add,
+	ThumbUpAltOutlined,
+	ThumbDownOutlined,
+} from '@material-ui/icons';
+
 import './list.scss';
 
 import 'swiper/css';
@@ -40,7 +47,9 @@ export default function List({ list }) {
 			getMovie();
 		});
 	}, [list.content]);
+	// console.log(movies);
 
+	// console.log(list);
 	// if (movies.length === 0) return <h1>loading...</h1>;
 	return (
 		<div className="list">
@@ -49,15 +58,15 @@ export default function List({ list }) {
 				freeMode={true}
 				className="mySwiper"
 				breakpoints={{
-					640: {
+					740: {
 						slidesPerView: 2,
 						spaceBetween: 20,
 					},
-					768: {
+					968: {
 						slidesPerView: 3,
 						spaceBetween: 40,
 					},
-					1024: {
+					1200: {
 						slidesPerView: 4,
 						spaceBetween: 30,
 					},
@@ -67,18 +76,30 @@ export default function List({ list }) {
 					// <ListItem index={i} item={item} key={i} />
 					<>
 						<SwiperSlide key={i}>
-							<div className="slider-item-wraper">
-								<Link to={`/watch/${i}`} className="link">
-									{/* <div className="img-wrapper"> */}
-									<img src={movie.img} alt="" className="swiperImg" />
-									{/* </div> */}
-									{/* <div className="innerContext">
-										<img src={movie.img} alt="" />
+							{/* <div className="slider-item-wraper"> */}
 
-										<h1>Breaking bad</h1>
-									</div> */}
-								</Link>
+							{/* <div className="img-wrapper"> */}
+							<img src={movie.img} alt="" className="swiperImg" />
+							{/* </div> */}
+							<div className="innerContext">
+								<p className="movieTitle">{movie.title}</p>
+								<div className="icons">
+									<Link to={`/watch/${i}`} className="link">
+										<PlayArrow className="icon" />
+									</Link>
+
+									<Add className="icon" />
+									<ThumbUpAltOutlined
+										className="icon"
+										onClick={() => console.log('hey')}
+									/>
+									<ThumbDownOutlined className="icon" />
+								</div>
+								<span className="movieLimit">+{movie.limit}</span>
+								<span className="movieYear">{movie.year}</span>
+								<p className="movieDesc">{movie.desc}</p>
 							</div>
+							{/* </div> */}
 						</SwiperSlide>
 					</>
 				))}

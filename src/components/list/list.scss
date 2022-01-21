@@ -1,8 +1,9 @@
 .list {
+	position: relative;
 	width: 100%;
-	height: 120px;
-	margin: 80px 0;
-	padding: 0px 20px;
+	// height: 200px;
+	margin: 20px 0;
+	padding: 10px 20px;
 	margin-top: 40px;
 
 	.listTitle {
@@ -34,17 +35,19 @@
 	}
 }
 
-.swiper {
-	width: 100%;
-	height: 100%;
+.swiper-wrapper {
+	// display: flex;
+	// justify-content: center;
+	// align-items: stretch;
+	// overflow: auto !important;
 }
 
 .swiper-slide {
 	text-align: center;
 	font-size: 18px;
 	background: #fff;
+	transition: all 1s;
 
-	border-radius: 13px;
 	/* Center slide text vertically */
 	display: -webkit-box;
 	display: -ms-flexbox;
@@ -58,31 +61,88 @@
 	-ms-flex-align: center;
 	-webkit-align-items: center;
 	align-items: stretch;
+
 	transition: all 1s;
+	// margin: 0 !important;
+	// margin-top: auto;
+	height: 231.5px !important;
+	border-radius: 10px;
+	overflow: hidden;
 
 	& img {
-		display: block;
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
+		display: block !important;
+		width: 100% !important;
+		height: 100% !important;
+
+		object-fit: fill;
 	}
 
 	&:hover {
-		// transform: scale(1.3);
-		// width: 450px !important;
-		// height: 450px !important;
+		cursor: pointer;
+		// transform: scale(1.1);
+		z-index: 99;
+
+		.innerContext {
+			visibility: visible;
+			opacity: 1;
+		}
 	}
 }
 
-.img-wrapper img {
-	display: block;
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-}
-.img-wrapper {
-	width: 100%;
-	height: 100%;
+.innerContext {
+	padding: 10px;
+	visibility: hidden;
+	opacity: 0;
+	transition: visibility 0.5s, opacity 0.5s linear;
 
-	border-radius: 10px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(
+		to bottom,
+		rgba(0, 0, 0, 0.4),
+		rgba(0, 0, 0, 0.7)
+	);
+	color: #ddd;
+	text-align: left;
+
+	.movieTitle {
+		font-size: 2rem;
+		text-transform: uppercase;
+		margin-bottom: 10px;
+	}
+
+	.icons {
+		display: flex;
+
+		.icon {
+			// border: 2px solid white;
+			outline-offset: 4px;
+			outline: 2px solid white;
+			border-radius: 50%;
+			margin-right: 15px;
+			z-index: 2;
+			margin-bottom: 10px;
+			cursor: default;
+			font-size: 1.2rem;
+			// padding: 0 3px;
+			// font-size: 25px;
+		}
+	}
+	.movieYear,
+	.movieLimit {
+		font-size: 1rem;
+		margin-bottom: 10px;
+	}
+	.movieLimit {
+		padding: 0.2rem;
+		display: inline-block;
+		border: 2px solid #ddd;
+		margin-right: 5px;
+	}
+	.movieDesc {
+		font-size: 0.8rem;
+	}
 }

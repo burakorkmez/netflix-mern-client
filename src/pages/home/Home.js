@@ -30,6 +30,18 @@ const Home = ({ type, genre, handleChange }) => {
 		};
 		getRandomLists();
 	}, [genre, type]);
+	if (lists.length === 0) {
+		return (
+			<div className="home">
+				<Navbar />
+				<Featured type={type} handleChange={handleChange} />
+				<div className="notFound">
+					<p>There is not any {type} with this genre yet</p>
+				</div>
+			</div>
+		);
+	}
+
 	return (
 		<div className="home">
 			<Navbar />
