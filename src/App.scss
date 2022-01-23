@@ -10,9 +10,30 @@
 
 body {
 	font-family: 'Roboto', sans-serif;
+	background-color: #000;
+	color: #fff;
+}
+
+ul {
+	list-style: none;
+}
+a {
+	text-decoration: none;
+	color: inherit;
 }
 
 .link {
 	color: inherit;
 	text-decoration: none;
+}
+
+.error {
+	color: red;
+	// border: 1px solid red;
+	padding: 10px;
+	font-size: 1.2rem;
+}
+
+.text-center {
+	text-align: center;
 }

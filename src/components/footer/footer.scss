@@ -1,0 +1,14 @@
+.footer {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	color: #757575;
+
+	.footer-item {
+		font-weight: 400;
+		font-size: 0.8rem;
+		margin-bottom: 0.5rem;
+		a:hover {
+			border-bottom: 1px solid currentColor;
+		}
+	}
+}

@@ -1,92 +1,186 @@
 .register {
-	width: 100vw;
-	height: 100vh;
-	background: linear-gradient(
+	border-bottom: 8px solid #222;
+	padding-bottom: 7rem;
+	color: #fff;
+	background-image: linear-gradient(
 			to bottom,
-			rgba(0, 0, 0, 0) 0%,
-			rgba(0, 0, 0, 1) 100%
+			rgba(0, 0, 0, 0.7),
+			rgba(0, 0, 0, 0.6)
 		),
-		url('https://cdn.hipwallpaper.com/i/98/21/dUyCkp.jpg');
+		url('../../../public/assets/img/register-bg.jpg');
+	background-position: center;
 	background-size: cover;
-	position: relative;
+	.header {
+		max-width: 1450px;
+		margin: 0 auto;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 20px 15px;
+		margin-bottom: 60px;
 
-	.top {
-		.wrapper {
-			padding: 20px 50px;
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-
-			.logo {
-				height: 40px;
-				cursor: pointer;
-				z-index: 1;
-			}
-
-			.loginButton {
-				background-color: red;
-				border: none;
-				color: white;
-				border-radius: 5px;
-				padding: 5px 15px;
-				font-size: 16px;
-				font-weight: 500;
-				cursor: pointer;
-				z-index: 1;
-			}
+		.logo {
+			height: 50px;
 		}
 	}
 
-	.container {
+	.text-wrapper {
 		width: 100%;
-		height: 100%;
-		position: absolute;
-		top: 0;
-		left: 0;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		color: white;
+		max-width: 950px;
+		margin: 0 auto;
+		text-align: center;
+		padding: 75px 0;
 
-		h1 {
-			font-size: 50px;
+		.main-title {
+			font-size: 4rem;
+			margin: 0 65px;
+		}
+		.subtitle {
+			font-size: 1.625rem;
+			margin: 1rem auto;
+			font-weight: 400;
 		}
 
-		h2 {
-			margin: 20px;
+		.form-title {
+			font-weight: 400;
+			margin-bottom: 20px;
 		}
-
-		p {
-			font-size: 20px;
+	}
+	.btn {
+		background-color: #e50914;
+		border: none;
+		cursor: pointer;
+		font-size: 1rem;
+		color: #fff;
+		padding: 0.5rem 1rem;
+		border-radius: 5px;
+		&.disabled {
+			color: gray;
+			opacity: 50%;
 		}
+	}
 
-		.input {
-			width: 50%;
-			background-color: white;
+	.register-form {
+		padding: 0 120px;
+		.input-wrapper {
 			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			margin-top: 20px;
-			height: 50px;
-			border-radius: 5px;
+			justify-content: center;
 
 			input {
-				flex: 9;
-				height: 100%;
-				border: none;
-				padding: 0 10px;
+				padding: 20px 20px;
+				border-top-left-radius: 3px;
+				border-bottom-left-radius: 3px;
+				outline: none;
+				flex: 1;
 			}
-
-			.registerButton {
-				flex: 3;
-				height: 100%;
-				background-color: red;
-				border: none;
-				color: white;
-				font-size: 22px;
-				cursor: pointer;
+			.btn-start {
+				display: flex;
+				align-items: center;
+				font-size: 2.2rem;
+				border-radius: 0;
 			}
 		}
 	}
+}
+.animation-container {
+	max-width: 1110px;
+	margin: 0 auto;
+	padding: 4rem 1rem;
+	.animation-card {
+		color: #fff;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		align-items: center;
+
+		.animation-main-text {
+			font-size: 3.125rem;
+			margin-bottom: 0.5rem;
+		}
+		.animation-sub-text {
+			font-size: 1.625rem;
+			font-weight: 400;
+		}
+		.animation-img {
+			width: 100%;
+			position: relative;
+			overflow: hidden;
+
+			img {
+				width: 100%;
+				height: 100%;
+			}
+		}
+		.animation-video {
+			display: flex;
+			position: absolute;
+			top: 45%;
+			width: 73%;
+			left: 50%;
+			right: 50%;
+			transform: translate(-50%, -45%);
+			justify-content: center;
+			z-index: -1;
+			&.animation-video-devices {
+				top: 23%;
+				width: 62%;
+				left: 50%;
+				right: 50%;
+				transform: translate(-50%, -23%);
+			}
+			video {
+				width: 100%;
+			}
+		}
+	}
+}
+
+.faq {
+	padding: 4rem 9rem;
+	max-width: 1110px;
+	margin: 0 auto;
+	.faq-title {
+		font-size: 3.125rem;
+		margin-bottom: 1rem;
+		line-height: 1.1;
+	}
+
+	.accordion {
+		margin-bottom: 1rem;
+		background-color: #303030;
+		font-size: 2rem;
+		.accordion-question {
+			padding: 1.2rem 1.5rem;
+			border-bottom: 1px solid black;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			.icon {
+				font-size: 2rem;
+			}
+		}
+		.accordion-answer {
+			background-color: #303030;
+			transition: all 0.33s cubic-bezier(0.5, 0, 0.1, 1);
+
+			.accordion-p {
+				margin-bottom: 2rem;
+			}
+
+			&.closed {
+				overflow: hidden;
+				max-height: 0px;
+				padding: 0 1.5rem;
+			}
+			&.open {
+				padding: 1.2rem 1.5rem;
+				max-height: 700px;
+			}
+		}
+	}
+}
+
+.footer-wrapper {
+	max-width: 1100px;
+	margin: 0 auto;
+	padding: 2.5rem 4rem;
 }
