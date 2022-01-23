@@ -1,3 +1,5 @@
+@import '../../breakpoints';
+
 .footer {
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
@@ -10,5 +12,15 @@
 		a:hover {
 			border-bottom: 1px solid currentColor;
 		}
+	}
+	.footer-developed-by {
+		font-size: 0.9rem;
+	}
+	@include sm {
+		grid-template-columns: 1fr;
+	}
+
+	@include md {
+		grid-template-columns: 1fr 1fr;
 	}
 }

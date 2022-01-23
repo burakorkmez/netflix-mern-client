@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { useState } from 'react';
 import './register.scss';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { ArrowForwardIos } from '@material-ui/icons';
 import AnimationCard from './AnimationCard';
 import Faq from './Faq';
@@ -47,7 +47,9 @@ export default function Register() {
 			<div className="register">
 				<header className="header">
 					<img src="/assets/img/logo.png" alt="" className="logo" />
-					<button className="btn">Sign In</button>
+					<Link className="btn link" to="/login">
+						Sign In
+					</Link>
 				</header>
 				<div className="text-wrapper">
 					<h1 className="main-title">Unlimited movies, TV shows, and more.</h1>
@@ -67,7 +69,7 @@ export default function Register() {
 										ref={emailRef}
 									/>
 									<button className="btn btn-start" onClick={handleStart}>
-										Get Started <ArrowForwardIos />
+										Get Started <ArrowForwardIos className="forward-icon" />
 									</button>
 								</>
 							) : (
@@ -76,6 +78,7 @@ export default function Register() {
 										type="text"
 										placeholder="username"
 										required
+										className="final-step"
 										onChange={(e) => setUsername(e.target.value)}
 										value={username}
 									/>
@@ -83,6 +86,7 @@ export default function Register() {
 										type="password"
 										placeholder="password"
 										required
+										className="final-step"
 										onChange={(e) => setPassword(e.target.value)}
 										value={password}
 									/>

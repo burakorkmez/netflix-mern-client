@@ -62,8 +62,11 @@ export default function Footer() {
 					<a href="#">Legal Notices</a>
 				</li>
 			</ul>
-			<br />
-			Netflix Turkey
+			<div>
+				<p className="footer-developed-by">
+					Developed by Burak Orkmez &copy;{new Date().getFullYear()}
+				</p>
+			</div>
 		</footer>
 	);
 }
