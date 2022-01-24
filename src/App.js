@@ -55,7 +55,7 @@ function App() {
 						<Redirect to="/login" />
 					)}
 				</Route>
-				<Route exact path="/watch">
+				<Route path="/watch">
 					{user ? <Watch /> : <Redirect to="/login" />}
 				</Route>
 			</Switch>

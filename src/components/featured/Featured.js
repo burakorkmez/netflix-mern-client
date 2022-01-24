@@ -1,10 +1,11 @@
 import { InfoOutlined, PlayArrow } from '@material-ui/icons';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
 import './featured.scss';
 
 export default function Featured({ type, handleChange }) {
-	const [content, setContent] = useState({});
+	const [content, setContent] = useState(null);
 
 	useEffect(() => {
 		const getRandomContent = async () => {
@@ -23,6 +24,7 @@ export default function Featured({ type, handleChange }) {
 		getRandomContent();
 		console.log(content);
 	}, [type]);
+
 	return (
 		<div className="featured">
 			{type && (
@@ -40,15 +42,17 @@ export default function Featured({ type, handleChange }) {
 					</select>
 				</div>
 			)}
-			<img src={content.img} className="featuredImg" alt="" />
+			<img src={content?.img} className="featuredImg" alt="" />
 			<div className="info">
-				<h1>{content.title}</h1>
-				<span className="desc">{content.desc}</span>
+				<h1>{content?.title}</h1>
+				<span className="desc">{content?.desc}</span>
 				<div className="buttons">
-					<button className="play">
-						<PlayArrow />
-						<span>Play</span>
-					</button>
+					<Link to="/watch">
+						<button className="play">
+							<PlayArrow />
+							<span>Play</span>
+						</button>
+					</Link>
 					<button className="more">
 						<InfoOutlined />
 						<span>Info</span>

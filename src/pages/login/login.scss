@@ -1,3 +1,4 @@
+@import '../../breakpoints';
 .login {
 	width: 100vw;
 	height: 100vh;
@@ -19,6 +20,10 @@
 
 			.logo {
 				height: 40px;
+				z-index: 2;
+				@include md {
+					height: 30px;
+				}
 			}
 		}
 	}
@@ -36,14 +41,27 @@
 		color: white;
 
 		form {
-			width: 300px;
-			height: 300px;
-			padding: 30px;
+			padding: 4rem 5rem;
+			max-width: 450px;
+			min-height: 500px;
 			border-radius: 5px;
 			background-color: var(--main-color);
 			display: flex;
 			flex-direction: column;
-			justify-content: space-around;
+			justify-content: space-evenly;
+
+			@include md {
+				h1 {
+					margin-bottom: 0.5rem;
+				}
+			}
+
+			@include md {
+				min-width: 100vw;
+				min-height: 100vh;
+				justify-content: flex-start;
+				padding: 12rem 5rem;
+			}
 
 			input {
 				height: 40px;
@@ -52,12 +70,16 @@
 				color: white;
 				padding-left: 10px;
 
+				@include md {
+					margin-bottom: 1rem;
+				}
+
 				&::placeholder {
 					color: lightgray;
 				}
 			}
 
-			button {
+			.login-btn {
 				height: 40px;
 				border-radius: 5px;
 				background-color: red;
@@ -66,12 +88,20 @@
 				font-size: 18px;
 				font-weight: 500;
 				cursor: pointer;
+				@include md {
+					margin-bottom: 0.5rem;
+				}
 			}
 
 			span {
 				color: lightgray;
-				b {
+				.sign-up-now {
+					display: inline-block;
 					color: white;
+					margin-left: 0.5rem;
+					@include md {
+						margin-bottom: 0.5rem;
+					}
 				}
 			}
 		}

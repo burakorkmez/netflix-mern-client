@@ -84,7 +84,7 @@ export default function List({ list }) {
 							<div className="innerContext">
 								<p className="movieTitle">{movie.title}</p>
 								<div className="icons">
-									<Link to={`/watch/${i}`} className="link">
+									<Link to={`/watch`} className="link">
 										<PlayArrow className="icon" />
 									</Link>
 

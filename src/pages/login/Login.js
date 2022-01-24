@@ -14,7 +14,7 @@ export default function Login() {
 		login(dispatch, { email, password });
 	};
 	return (
-		<div className="login">
+		<section className="login">
 			<div className="top">
 				<div className="wrapper">
 					<img
@@ -29,7 +29,7 @@ export default function Login() {
 					<h1>Sign In</h1>
 					<input
 						type="email"
-						placeholder="Email or phone number"
+						placeholder="Email"
 						onChange={(e) => setEmail(e.target.value)}
 					/>
 					<input
@@ -37,19 +37,19 @@ export default function Login() {
 						placeholder="Password"
 						onChange={(e) => setPassword(e.target.value)}
 					/>
-					<button className="loginButton">Sign In</button>
+					<button className="login-btn">Sign In</button>
 					<span>
 						New to Netflix?
 						<Link to="/register" className="link">
-							<b>Sign up now.</b>
+							<b className="sign-up-now">Sign up now.</b>
 						</Link>
 					</span>
 					<small>
 						This page is protected by Google reCAPTCHA to ensure you're not a
-						bot. <b>Learn more</b>.
+						bot.
 					</small>
 				</form>
 			</div>
-		</div>
+		</section>
 	);
 }

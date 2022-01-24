@@ -7,9 +7,12 @@ import './home.scss';
 
 const Home = ({ type, genre, handleChange }) => {
 	const [lists, setLists] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
+		setLists([]);
 		const getRandomLists = async () => {
+			setIsLoading(true);
 			try {
 				const res = await axios.get(
 					`lists${type ? `?type=${type}` : ''}${
@@ -23,13 +26,30 @@ const Home = ({ type, genre, handleChange }) => {
 						},
 					}
 				);
+				console.log(res);
+				// if (res.data.length === 0) setListExists(false);
 				setLists(res.data);
+				setIsLoading(false);
 			} catch (err) {
+				setIsLoading(false);
 				console.log(err);
 			}
 		};
 		getRandomLists();
 	}, [genre, type]);
+	console.log(lists);
+
+	if (isLoading) {
+		return (
+			<div className="home">
+				<Navbar />
+				<Featured type={type} handleChange={handleChange} />
+				<div className="notFound">
+					<p>Loading...</p>
+				</div>
+			</div>
+		);
+	}
 	if (lists.length === 0) {
 		return (
 			<div className="home">
