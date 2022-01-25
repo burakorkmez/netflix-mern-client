@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { axiosInstance } from '../../config';
 
 import {
 	PlayArrow,
@@ -30,7 +30,7 @@ export default function List({ list }) {
 		list.content.map((item, i) => {
 			const getMovie = async () => {
 				try {
-					const res = await axios.get('movies/find/' + item, {
+					const res = await axiosInstance.get('movies/find/' + item, {
 						headers: {
 							token:
 								'Bearer ' +
@@ -47,10 +47,7 @@ export default function List({ list }) {
 			getMovie();
 		});
 	}, [list.content]);
-	// console.log(movies);
 
-	// console.log(list);
-	// if (movies.length === 0) return <h1>loading...</h1>;
 	return (
 		<div className="list">
 			<h1 className="listTitle">{list.title}</h1>
@@ -73,14 +70,9 @@ export default function List({ list }) {
 				}}
 			>
 				{movies.map((movie, i) => (
-					// <ListItem index={i} item={item} key={i} />
 					<>
 						<SwiperSlide key={i}>
-							{/* <div className="slider-item-wraper"> */}
-
-							{/* <div className="img-wrapper"> */}
 							<img src={movie.img} alt="" className="swiperImg" />
-							{/* </div> */}
 							<div className="innerContext">
 								<p className="movieTitle">{movie.title}</p>
 								<div className="icons">
@@ -99,7 +91,6 @@ export default function List({ list }) {
 								<span className="movieYear">{movie.year}</span>
 								<p className="movieDesc">{movie.desc}</p>
 							</div>
-							{/* </div> */}
 						</SwiperSlide>
 					</>
 				))}

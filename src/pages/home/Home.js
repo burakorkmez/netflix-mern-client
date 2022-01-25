@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { axiosInstance } from '../../config';
 import { useEffect, useState } from 'react';
 import Featured from '../../components/featured/Featured';
 import List from '../../components/list/List';
@@ -14,7 +14,7 @@ const Home = ({ type, genre, handleChange }) => {
 		const getRandomLists = async () => {
 			setIsLoading(true);
 			try {
-				const res = await axios.get(
+				const res = await axiosInstance.get(
 					`lists${type ? `?type=${type}` : ''}${
 						genre ? `&genre=${genre}` : ''
 					}`,

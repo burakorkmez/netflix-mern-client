@@ -89,9 +89,7 @@ export default function Profile() {
 						<div className="user-img">
 							<img
 								src={`${
-									user.profilePic
-										? user.profilePic
-										: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAEy-Hi3lntqni03_IgMHV_6nbWR5sG5EuE11oKCej1YqlHvxzo6lfyF7L_JXrJaoZIkY&usqp=CAU'
+									user.profilePic ? user.profilePic : '/assets/img/logo.png'
 								}`}
 								alt="user avatar"
 							/>

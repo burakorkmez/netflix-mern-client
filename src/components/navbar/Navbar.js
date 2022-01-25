@@ -24,10 +24,7 @@ const Navbar = () => {
 		<div className={isScrolled ? 'navbar scrolled' : 'navbar'}>
 			<div className="container">
 				<div className="left">
-					<img
-						src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png"
-						alt=""
-					/>
+					<img src="/assets/img/logo.png" alt="Netflix logo" />
 					<Link to="/" className="link">
 						<span>Homepage</span>
 					</Link>
@@ -45,7 +42,7 @@ const Navbar = () => {
 							src={`${
 								user.profilePic
 									? user.profilePic
-									: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAEy-Hi3lntqni03_IgMHV_6nbWR5sG5EuE11oKCej1YqlHvxzo6lfyF7L_JXrJaoZIkY&usqp=CAU'
+									: '/assets/img/user-avatar.jpg'
 							}`}
 							alt="user avatar"
 						/>

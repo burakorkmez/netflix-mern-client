@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
+import { axiosInstance } from '../config';
 import { AuthContext } from '../context/authContext/AuthContext';
 import { projectStorage } from '../firebase/firebase';
 
@@ -25,7 +25,7 @@ export default function useProfile() {
 				console.log(imgUrl);
 			}
 
-			const res = await axios.put(
+			const res = await axiosInstance.put(
 				`/users/${user._id}`,
 				{ profilePic: imgUrl, username, email, password },
 				{

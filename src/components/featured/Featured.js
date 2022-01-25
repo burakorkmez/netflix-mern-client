@@ -1,7 +1,7 @@
 import { InfoOutlined, PlayArrow } from '@material-ui/icons';
-import axios from 'axios';
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { axiosInstance } from '../../config';
 import './featured.scss';
 
 export default function Featured({ type, handleChange }) {
@@ -10,7 +10,7 @@ export default function Featured({ type, handleChange }) {
 	useEffect(() => {
 		const getRandomContent = async () => {
 			try {
-				const res = await axios.get(`/movies/random?type=${type}`, {
+				const res = await axiosInstance.get(`/movies/random?type=${type}`, {
 					headers: {
 						token:
 							'Bearer ' + JSON.parse(localStorage.getItem('user')).accessToken,

@@ -3,13 +3,12 @@ import Home from './pages/home/Home';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
 import Watch from './pages/watch/Watch';
+import Profile from './pages/profile/Profile';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { useState, useContext } from 'react';
 import { AuthContext } from './context/authContext/AuthContext';
-import Profile from './pages/profile/Profile';
 
 function App() {
-	// const user = true;
 	const {
 		state: { user },
 	} = useContext(AuthContext);

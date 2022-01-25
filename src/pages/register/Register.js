@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { useState } from 'react';
+import { axiosInstance } from '../../config';
 import './register.scss';
-import axios from 'axios';
 import { useHistory, Link } from 'react-router-dom';
 import { ArrowForwardIos } from '@material-ui/icons';
 import AnimationCard from './AnimationCard';
@@ -26,7 +26,7 @@ export default function Register() {
 		setError(null);
 		setIsLoading(true);
 		try {
-			await axios.post('/auth/register', { email, username, password });
+			await axiosInstance.post('/auth/register', { email, username, password });
 			setIsLoading(false);
 			setError(null);
 			history.push('/login');
