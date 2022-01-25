@@ -21,7 +21,7 @@ export default function Profile() {
 	const month = new Date(user?.createdAt).getMonth() + 1;
 	const year = new Date(user?.createdAt).getFullYear();
 	const dateStr = date + '/' + month + '/' + year;
-
+	console.log(profilePic);
 	// disable button if the infos are the same as before.
 	useEffect(() => {
 		if (
@@ -38,7 +38,6 @@ export default function Profile() {
 	const handleFileChange = (e) => {
 		setProfilePic(null);
 		let selectedFile = e.target.files[0];
-		console.log(selectedFile);
 
 		if (!selectedFile) {
 			setProfilePicError('Please select a file');
@@ -46,12 +45,13 @@ export default function Profile() {
 		}
 		if (!selectedFile.type.includes('image')) {
 			setProfilePicError('Selected file must be an image');
+			setProfilePic('');
 			return;
 		}
+
 		setProfilePicError(null);
 		setProfilePic(selectedFile);
 	};
-	console.log(username, user.username);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -79,7 +79,6 @@ export default function Profile() {
 		await updateProfile(value);
 		window.location.reload();
 	};
-	// console.log(user);
 	return (
 		<section className="profile-section">
 			<Navbar />
@@ -137,6 +136,7 @@ export default function Profile() {
 							<span className="user-input">{dateStr}</span>
 						</div>
 						{error && <h3 className="error">{error}</h3>}
+						{profilePicError && <h3 className="error">{profilePicError}</h3>}
 						{isPending && (
 							<button className="btn-update disabled" disabled>
 								Updating...
