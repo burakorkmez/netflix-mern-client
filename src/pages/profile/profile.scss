@@ -1,0 +1,113 @@
+@import '../../breakpoints';
+
+.profile-section {
+	background-image: linear-gradient(
+			to bottom,
+			rgba(0, 0, 0, 0.5),
+			rgba(0, 0, 0, 0.4)
+		),
+		url('../../../public/assets/img/register-bg.jpg');
+	background-position: center;
+	background-size: cover;
+
+	.profile-container {
+		height: calc(100vh - 70px);
+		width: 100%;
+		margin-top: 70px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		.form-container {
+			padding: 5rem 2rem;
+			background-color: rgba(0, 0, 0, 0.75);
+			@include md {
+				padding: 4rem 1rem;
+			}
+			@include sm {
+				width: 100%;
+				padding: 4rem 0.5rem;
+			}
+
+			.profile-title {
+				margin-bottom: 2rem;
+				text-align: center;
+				font-size: 2rem;
+				@include md {
+					font-size: 1.5rem;
+				}
+			}
+			.user-img {
+				display: flex;
+				img {
+					height: 100px;
+					margin-right: 2rem;
+					@include md {
+						height: 70px;
+					}
+					@include sm {
+						height: 50px;
+					}
+				}
+
+				.user-img-input {
+					align-self: flex-end;
+				}
+			}
+			.info {
+				display: flex;
+				justify-content: space-between;
+				margin-top: 1rem;
+				align-items: center;
+			}
+			label {
+				flex: 1;
+				font-size: 1rem;
+				margin-right: 2rem;
+				@include md {
+					margin-right: 0rem;
+					font-size: 0.8rem;
+				}
+			}
+
+			// .member-from {
+			// 	label {
+			// 		margin-right: 0;
+			// 	}
+			// 	.user-input {
+			// 	}
+			// }
+			.user-input {
+				flex: 2;
+				padding: 0.5rem;
+				font-size: 1rem;
+				border: none;
+				border-radius: 5px;
+			}
+
+			.btn-update {
+				background-color: #e50914;
+				padding: 0.5rem 1rem;
+				border-radius: 8px;
+				border: none;
+				cursor: pointer;
+				margin-top: 1rem;
+			}
+			.btn-update {
+				background-color: #e50914;
+				padding: 0.5rem 1rem;
+				border-radius: 8px;
+				border: none;
+				cursor: pointer;
+				margin-top: 1rem;
+				font-size: 1rem;
+				font-weight: 600;
+				color: white;
+				&.disabled {
+					color: gray;
+					opacity: 50%;
+				}
+			}
+		}
+	}
+}

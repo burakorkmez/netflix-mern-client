@@ -6,6 +6,7 @@ import Watch from './pages/watch/Watch';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { useState, useContext } from 'react';
 import { AuthContext } from './context/authContext/AuthContext';
+import Profile from './pages/profile/Profile';
 
 function App() {
 	// const user = true;
@@ -57,6 +58,9 @@ function App() {
 				</Route>
 				<Route path="/watch">
 					{user ? <Watch /> : <Redirect to="/login" />}
+				</Route>
+				<Route path="/profile">
+					{user ? <Profile /> : <Redirect to="/login" />}
 				</Route>
 			</Switch>
 		</BrowserRouter>

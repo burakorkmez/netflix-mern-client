@@ -16,13 +16,11 @@ export default function Login() {
 	return (
 		<section className="login">
 			<div className="top">
-				<div className="wrapper">
-					<img
-						className="logo"
-						src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png"
-						alt=""
-					/>
-				</div>
+				<Link to="/register">
+					<div className="wrapper">
+						<img className="logo" src="/assets/img/logo.png" alt="" />
+					</div>
+				</Link>
 			</div>
 			<div className="container">
 				<form onSubmit={handleSubmit}>
@@ -48,6 +46,7 @@ export default function Login() {
 						This page is protected by Google reCAPTCHA to ensure you're not a
 						bot.
 					</small>
+					<small>"Developed by Burak Orkmez"</small>
 				</form>
 			</div>
 		</section>

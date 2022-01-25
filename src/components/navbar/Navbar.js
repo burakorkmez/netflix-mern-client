@@ -6,7 +6,10 @@ import './navbar.scss';
 
 const Navbar = () => {
 	const [isScrolled, setIsScrolled] = useState(false);
-	const { dispatch } = useContext(AuthContext);
+	const {
+		dispatch,
+		state: { user },
+	} = useContext(AuthContext);
 
 	window.onscroll = () => {
 		setIsScrolled(window.pageYOffset === 0 ? false : true);
@@ -37,10 +40,16 @@ const Navbar = () => {
 				</div>
 				<div className="right">
 					<Notifications className="icon" />
-					<img
-						src="https://images.pexels.com/photos/6899260/pexels-photo-6899260.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-						alt=""
-					/>
+					<Link to="/profile">
+						<img
+							src={`${
+								user.profilePic
+									? user.profilePic
+									: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAEy-Hi3lntqni03_IgMHV_6nbWR5sG5EuE11oKCej1YqlHvxzo6lfyF7L_JXrJaoZIkY&usqp=CAU'
+							}`}
+							alt="user avatar"
+						/>
+					</Link>
 					<div className="profile">
 						<ArrowDropDown className="icon" />
 						<div className="options">
