@@ -1,4 +1,4 @@
-import { ArrowDropDown, Notifications, Search } from '@material-ui/icons';
+import { ArrowDropDown, Notifications } from '@material-ui/icons';
 import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/authContext/AuthContext';
