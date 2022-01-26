@@ -89,7 +89,9 @@ export default function Profile() {
 						<div className="user-img">
 							<img
 								src={`${
-									user.profilePic ? user.profilePic : '/assets/img/logo.png'
+									user.profilePic
+										? user.profilePic
+										: '/assets/img/user-avatar.jpg'
 								}`}
 								alt="user avatar"
 							/>
