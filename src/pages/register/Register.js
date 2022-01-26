@@ -7,6 +7,7 @@ import { ArrowForwardIos } from '@material-ui/icons';
 import AnimationCard from './AnimationCard';
 import Faq from './Faq';
 import Footer from '../../components/footer/Footer';
+import { validateEmail } from '../../functions/validateEmail';
 
 export default function Register() {
 	const [username, setUsername] = useState('');
@@ -19,8 +20,12 @@ export default function Register() {
 	const emailRef = useRef();
 
 	const handleStart = () => {
+		setError(null);
+		const emailIsValid = validateEmail(emailRef.current.value);
+		if (!emailIsValid) return setError('Please type a valid email');
 		setEmail(emailRef.current.value);
 	};
+
 	const handleFinish = async (e) => {
 		e.preventDefault();
 		setError(null);

@@ -3,14 +3,20 @@ import { useState, useContext } from 'react';
 import { login } from '../../context/authContext/apiCalls';
 import { AuthContext } from '../../context/authContext/AuthContext';
 import { Link } from 'react-router-dom';
+import { validateEmail } from '../../functions/validateEmail';
 
 export default function Login() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const { dispatch } = useContext(AuthContext);
+	const {
+		dispatch,
+		state: { error, isFetching },
+	} = useContext(AuthContext);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		const emailIsValid = validateEmail(email);
+		if (!emailIsValid) return;
 		login(dispatch, { email, password });
 	};
 	return (
@@ -35,7 +41,13 @@ export default function Login() {
 						placeholder="Password"
 						onChange={(e) => setPassword(e.target.value)}
 					/>
-					<button className="login-btn">Sign In</button>
+					{!isFetching && <button className="login-btn">Sign In</button>}
+					{isFetching && (
+						<button className={`login-btn ${isFetching ? 'disabled' : ''}`}>
+							Signin In...
+						</button>
+					)}
+					{error && <p className="error">{error}</p>}
 					<span>
 						New to Netflix?
 						<Link to="/register" className="link">

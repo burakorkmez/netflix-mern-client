@@ -38,3 +38,8 @@ a {
 	text-align: center;
 }
 
+.disabled {
+	color: gray;
+	opacity: 50%;
+	cursor: default;
+}
