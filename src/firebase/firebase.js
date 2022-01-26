@@ -2,12 +2,12 @@ import firebase from 'firebase/app';
 import 'firebase/storage';
 
 const firebaseConfig = {
-	apiKey: process.env.REACT_APP_API_KEY,
-	authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-	projectId: process.env.REACT_APP_PROJECT_ID,
-	storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-	messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-	appId: process.env.REACT_APP_APP_ID,
+	apiKey: 'AIzaSyCGrxpQ2u3KLRex94mYf0dv55r2ApvmbkU',
+	authDomain: 'netflix-mern-b2045.firebaseapp.com',
+	projectId: 'netflix-mern-b2045',
+	storageBucket: 'netflix-mern-b2045.appspot.com',
+	messagingSenderId: '988098334834',
+	appId: '1:988098334834:web:ca8cb1e8ae5481b01772eb',
 };
 
 firebase.initializeApp(firebaseConfig);
