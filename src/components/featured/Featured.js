@@ -1,5 +1,5 @@
 import { InfoOutlined, PlayArrow } from '@material-ui/icons';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { axiosInstance } from '../../config';
 import './featured.scss';
