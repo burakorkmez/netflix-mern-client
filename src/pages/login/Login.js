@@ -4,7 +4,7 @@ import { login } from '../../context/authContext/apiCalls';
 import { AuthContext } from '../../context/authContext/AuthContext';
 import { Link } from 'react-router-dom';
 import { validateEmail } from '../../functions/validateEmail';
-
+import { projectAuth } from '../../firebase/firebase';
 export default function Login() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -13,11 +13,24 @@ export default function Login() {
 		state: { error, isFetching },
 	} = useContext(AuthContext);
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		const emailIsValid = validateEmail(email);
 		if (!emailIsValid) return;
-		login(dispatch, { email, password });
+		const res = await login(dispatch, { email, password });
+
+		projectAuth
+			.signInWithCustomToken(res.customToken)
+			.then((userCredential) => {
+				// Signed in
+				const user = userCredential.user;
+				user.updateEmail(res.email);
+				console.log(user);
+				console.log(userCredential);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 	};
 	return (
 		<section className="login">

@@ -26,8 +26,6 @@ const Home = ({ type, genre, handleChange }) => {
 						},
 					}
 				);
-				console.log(res);
-				// if (res.data.length === 0) setListExists(false);
 				setLists(res.data);
 				setIsLoading(false);
 			} catch (err) {
@@ -37,7 +35,6 @@ const Home = ({ type, genre, handleChange }) => {
 		};
 		getRandomLists();
 	}, [genre, type]);
-	console.log(lists);
 
 	if (isLoading) {
 		return (

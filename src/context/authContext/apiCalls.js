@@ -5,6 +5,7 @@ export const login = async (dispatch, user) => {
 	try {
 		const res = await axiosInstance.post('auth/login', user);
 		dispatch({ type: 'LOGIN_SUCCESS', payload: res.data });
+		return res.data;
 	} catch (err) {
 		if (err.message === 'Request failed with status code 401') {
 			dispatch({
