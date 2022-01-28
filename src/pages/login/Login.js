@@ -1,36 +1,31 @@
 import './login.scss';
 import { useState, useContext } from 'react';
-import { login } from '../../context/authContext/apiCalls';
+import { loginCall } from '../../context/authContext/apiCalls';
 import { AuthContext } from '../../context/authContext/AuthContext';
 import { Link } from 'react-router-dom';
 import { validateEmail } from '../../functions/validateEmail';
 import { projectAuth } from '../../firebase/firebase';
+
 export default function Login() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const {
-		dispatch,
-		state: { error, isFetching },
-	} = useContext(AuthContext);
+	const { dispatch, error, isFetching } = useContext(AuthContext);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		const emailIsValid = validateEmail(email);
 		if (!emailIsValid) return;
-		const res = await login(dispatch, { email, password });
+		try {
+			const res = await loginCall(dispatch, { email, password });
 
-		projectAuth
-			.signInWithCustomToken(res.customToken)
-			.then((userCredential) => {
-				// Signed in
-				const user = userCredential.user;
-				user.updateEmail(res.email);
-				console.log(user);
-				console.log(userCredential);
-			})
-			.catch((error) => {
-				console.log(error);
-			});
+			const userCredential = await projectAuth.signInWithCustomToken(
+				res.customToken
+			);
+			const user = userCredential.user;
+			await user.updateEmail;
+		} catch (err) {
+			console.log(err);
+		}
 	};
 	return (
 		<section className="login">

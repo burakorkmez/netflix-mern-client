@@ -1,54 +1,51 @@
 import { useContext, useEffect, useState } from 'react';
 import Navbar from '../../components/navbar/Navbar';
 import { AuthContext } from '../../context/authContext/AuthContext';
+import { formatDate } from '../../functions/formatDate';
 import useProfile from '../../hooks/useProfile';
 import './profile.scss';
 
 export default function Profile() {
-	const {
-		state: { user },
-	} = useContext(AuthContext);
+	const { user } = useContext(AuthContext);
+
 	const [username, setUsername] = useState(user.username);
 	const [email, setEmail] = useState(user.email);
 	const [password, setPassword] = useState('');
 	const [profilePic, setProfilePic] = useState('');
 	const [profilePicError, setProfilePicError] = useState(null);
 	const [disableBtn, setDisableBtn] = useState(true);
+
 	const { error, setError, isPending, updateProfile } = useProfile();
 
 	// format member since date
-	const date = new Date(user?.createdAt).getDate();
-	const month = new Date(user?.createdAt).getMonth() + 1;
-	const year = new Date(user?.createdAt).getFullYear();
-	const dateStr = date + '/' + month + '/' + year;
-	console.log(profilePic);
+	const dateStr = formatDate(user);
+
 	// disable button if the infos are the same as before.
 	useEffect(() => {
 		if (
-			username === user.username &&
-			email === user.email &&
-			profilePic === ''
+			username !== user.username ||
+			email !== user.email ||
+			profilePic !== ''
 		) {
-			setDisableBtn(true);
+			if (!profilePicError) {
+				setDisableBtn(false);
+			}
 		} else {
-			setDisableBtn(false);
+			setDisableBtn(true);
 		}
-	}, [username, email, profilePic, user.username, user.email]);
+	}, [username, email, profilePic, user.username, user.email, profilePicError]);
 
 	const handleFileChange = (e) => {
-		setProfilePic(null);
+		setProfilePicError(null);
+		setProfilePic('');
 		let selectedFile = e.target.files[0];
 
-		if (!selectedFile) {
-			setProfilePicError('Please select a file');
-			return;
-		}
 		if (!selectedFile.type.includes('image')) {
 			setProfilePicError('Selected file must be an image');
 			setProfilePic('');
 			return;
 		}
-
+		if (!selectedFile) setProfilePic('');
 		setProfilePicError(null);
 		setProfilePic(selectedFile);
 	};
@@ -150,7 +147,6 @@ export default function Profile() {
 						{!isPending && !disableBtn && (
 							<button className="btn-update ">Update</button>
 						)}
-						{/* <button className="btn-update disabled">Update</button> */}
 					</form>
 				</div>
 			</div>

@@ -1,52 +1,37 @@
 import { useRef } from 'react';
 import { useState } from 'react';
-import { axiosInstance } from '../../config';
 import './register.scss';
-import { useHistory, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ArrowForwardIos } from '@material-ui/icons';
 import AnimationCard from './AnimationCard';
 import Faq from './Faq';
 import Footer from '../../components/footer/Footer';
 import { validateEmail } from '../../functions/validateEmail';
+import { useSignup } from '../../hooks/useSignup';
 
 export default function Register() {
 	const [username, setUsername] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [error, setError] = useState(null);
-	const [isLoading, setIsLoading] = useState(false);
-	const history = useHistory();
-
 	const emailRef = useRef();
 
+	const { error, isPending, signup } = useSignup(
+		setUsername,
+		setEmail,
+		emailRef
+	);
+
 	const handleStart = () => {
-		setError(null);
 		const emailIsValid = validateEmail(emailRef.current.value);
-		if (!emailIsValid) return setError('Please type a valid email');
+		if (!emailIsValid) return;
 		setEmail(emailRef.current.value);
 	};
 
-	const handleFinish = async (e) => {
+	const handleFinish = (e) => {
 		e.preventDefault();
-		setError(null);
-		setIsLoading(true);
-		try {
-			await axiosInstance.post('/auth/register', { email, username, password });
-			setIsLoading(false);
-			setError(null);
-			history.push('/login');
-		} catch (err) {
-			setIsLoading(false);
-			if (err.response.data?.keyPattern?.username === 1)
-				setError('This username is already taken. Please use another one');
-			setUsername('');
-			if (err.response.data?.keyPattern?.email === 1) {
-				setError('This email is already taken. Please use another one');
-				setEmail('');
-			}
-			emailRef.current.focus();
-		}
+		signup(email, username, password);
 	};
+
 	return (
 		<>
 			<div className="register">
@@ -96,11 +81,11 @@ export default function Register() {
 										value={password}
 									/>
 									<button
-										className={`btn btn-start ${isLoading && 'disabled'}`}
+										className={`btn btn-start ${isPending && 'disabled'}`}
 										onClick={handleFinish}
-										disabled={isLoading}
+										disabled={isPending}
 									>
-										{isLoading ? 'Loading...' : 'Register'} <ArrowForwardIos />
+										{isPending ? 'Loading...' : 'Register'} <ArrowForwardIos />
 									</button>
 								</>
 							)}

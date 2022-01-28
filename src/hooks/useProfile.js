@@ -8,9 +8,7 @@ export default function useProfile() {
 	const [isPending, setIsPending] = useState(false);
 	const [error, setError] = useState(null);
 
-	const {
-		state: { user },
-	} = useContext(AuthContext);
+	const { user } = useContext(AuthContext);
 
 	const updateProfile = async (value) => {
 		const { username, email, profilePic, password } = value;
@@ -22,7 +20,6 @@ export default function useProfile() {
 				const uploadPath = `profilePics/${user._id}/pp.jpg`;
 				const img = await projectStorage.ref(uploadPath).put(profilePic);
 				imgUrl = await img.ref.getDownloadURL();
-				console.log(imgUrl);
 			}
 
 			const res = await axiosInstance.put(
@@ -35,16 +32,13 @@ export default function useProfile() {
 					},
 				}
 			);
-			console.log(res);
 			if (res.status === 200) {
 				const { username, email, profilePic } = res.data;
-				console.log(res.data);
 				let json = JSON.parse(localStorage.getItem('user'));
 				json.username = username;
 				json.email = email;
 				json.profilePic = profilePic;
 
-				// console.log(password, rest);
 				localStorage.setItem('user', JSON.stringify(json));
 			}
 
@@ -63,5 +57,6 @@ export default function useProfile() {
 	useEffect(() => {
 		return () => setIsCancelled(true);
 	}, []);
+
 	return { error, isPending, updateProfile, setError };
 }

@@ -1,6 +1,7 @@
 import { axiosInstance } from '../../config';
 
-export const login = async (dispatch, user) => {
+// Login
+export const loginCall = async (dispatch, user) => {
 	dispatch({ type: 'LOGIN_START' });
 	try {
 		const res = await axiosInstance.post('auth/login', user);
@@ -15,5 +16,24 @@ export const login = async (dispatch, user) => {
 		} else {
 			dispatch({ type: 'LOGIN_FAILURE', payload: 'Something went wrong' });
 		}
+	}
+};
+
+// Signup
+
+export const signupCall = async (dispatch, email, username, password) => {
+	dispatch({ type: 'LOGIN_START' });
+	try {
+		const res = await axiosInstance.post('auth/register', {
+			email,
+			username,
+			password,
+		});
+		dispatch({ type: 'LOGIN_SUCCESS', payload: res.data });
+		return res.data;
+	} catch (err) {
+		console.log(err);
+		dispatch({ type: 'LOGIN_FAILURE', payload: 'Something went wrong' });
+		throw err;
 	}
 };

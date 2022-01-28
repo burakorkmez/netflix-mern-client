@@ -19,24 +19,18 @@ import 'swiper/css/navigation';
 import SwiperCore, { Pagination, Navigation } from 'swiper';
 import { Swiper } from 'swiper/react';
 import { SwiperSlide } from 'swiper/react';
+import { fetchData } from '../../functions/fetchData';
 
 // install Swiper modules
 SwiperCore.use([Pagination, Navigation]);
 
 export default function List({ list }) {
 	const [movies, setMovies] = useState([]);
-
 	useEffect(() => {
-		list.content.map((item, i) => {
+		list.content.map((item) => {
 			const getMovie = async () => {
 				try {
-					const res = await axiosInstance.get('movies/find/' + item, {
-						headers: {
-							token:
-								'Bearer ' +
-								JSON.parse(localStorage.getItem('user')).accessToken,
-						},
-					});
+					const res = await fetchData('GET', '/movies/find/' + item);
 					setMovies((prev) => {
 						return [...prev, res.data];
 					});
@@ -69,9 +63,9 @@ export default function List({ list }) {
 					},
 				}}
 			>
-				{movies.map((movie, i) => (
+				{movies.map((movie) => (
 					<>
-						<SwiperSlide key={i}>
+						<SwiperSlide key={movie._id}>
 							<img src={movie.img} alt="" className="swiperImg" />
 							<div className="innerContext">
 								<p className="movieTitle">{movie.title}</p>

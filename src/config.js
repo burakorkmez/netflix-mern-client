@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export const axiosInstance = axios.create({
-	baseURL: 'https://netflix-mern-clone.herokuapp.com/api/',
+	baseURL: 'http://localhost:8080/api/',
 });

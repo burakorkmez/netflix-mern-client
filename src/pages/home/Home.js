@@ -4,6 +4,7 @@ import Featured from '../../components/featured/Featured';
 import List from '../../components/list/List';
 import Navbar from '../../components/navbar/Navbar';
 import './home.scss';
+import { fetchData } from '../../functions/fetchData';
 
 const Home = ({ type, genre, handleChange }) => {
 	const [lists, setLists] = useState([]);
@@ -14,17 +15,9 @@ const Home = ({ type, genre, handleChange }) => {
 		const getRandomLists = async () => {
 			setIsLoading(true);
 			try {
-				const res = await axiosInstance.get(
-					`lists${type ? `?type=${type}` : ''}${
-						genre ? `&genre=${genre}` : ''
-					}`,
-					{
-						headers: {
-							token:
-								'Bearer ' +
-								JSON.parse(localStorage.getItem('user')).accessToken,
-						},
-					}
+				const res = await fetchData(
+					'GET',
+					`lists${type ? `?type=${type}` : ''}${genre ? `&genre=${genre}` : ''}`
 				);
 				setLists(res.data);
 				setIsLoading(false);

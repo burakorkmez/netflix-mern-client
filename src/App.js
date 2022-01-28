@@ -9,9 +9,7 @@ import { useState, useContext } from 'react';
 import { AuthContext } from './context/authContext/AuthContext';
 
 function App() {
-	const {
-		state: { user },
-	} = useContext(AuthContext);
+	const { user } = useContext(AuthContext);
 	const [genre, setGenre] = useState(null);
 
 	const handleChange = (value) => {

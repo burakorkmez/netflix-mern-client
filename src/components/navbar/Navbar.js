@@ -6,10 +6,7 @@ import './navbar.scss';
 
 const Navbar = () => {
 	const [isScrolled, setIsScrolled] = useState(false);
-	const {
-		dispatch,
-		state: { user },
-	} = useContext(AuthContext);
+	const { dispatch, user } = useContext(AuthContext);
 
 	window.onscroll = () => {
 		setIsScrolled(window.pageYOffset === 0 ? false : true);
