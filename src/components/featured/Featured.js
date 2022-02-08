@@ -4,10 +4,14 @@ import { formatDuration } from '../../functions/formatDuration';
 import { genres } from '../../helpers/genres';
 import './featured.scss';
 import Modal from '../modal/Modal';
+import { useModalContext } from '../../context/modalContext/ModalContext';
 
 export default function Featured({ type, handleChange }) {
 	const [content, setContent] = useState(null);
 	const [duration, setDuration] = useState(null);
+
+	const { isModalOpen, dispatch } = useModalContext();
+
 	useEffect(() => {
 		const getRandomContent = async () => {
 			try {
@@ -39,7 +43,11 @@ export default function Featured({ type, handleChange }) {
 			}
 		});
 	});
-	console.log(content);
+
+	const handleClick = () => {
+		dispatch({ type: 'OPEN_MODAL' });
+	};
+
 	return (
 		<>
 			<div className="featured">
@@ -83,7 +91,7 @@ export default function Featured({ type, handleChange }) {
 						<span className="duration">{formatDuration(duration)}</span>
 					</div>
 					<div className="buttons">
-						<button className="play">
+						<button className="play" onClick={handleClick}>
 							<PlayArrow />
 							<span>Play</span>
 						</button>
@@ -94,7 +102,7 @@ export default function Featured({ type, handleChange }) {
 					</div>
 				</div>
 			</div>
-			<Modal id={content?.id} />
+			{isModalOpen && <Modal id={content?.id} />}
 		</>
 	);
 }

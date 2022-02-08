@@ -31,6 +31,9 @@ const Navbar = () => {
 					<Link to="/movies" className="link">
 						<span>Movies</span>
 					</Link>
+					<Link to="/favorites" className="link">
+						<span>Favorites</span>
+					</Link>
 				</div>
 				<div className="right">
 					<Notifications className="icon" />

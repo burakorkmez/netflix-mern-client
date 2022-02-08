@@ -5,10 +5,12 @@ import { ArrowBackIos, ArrowForwardIos, Close } from '@material-ui/icons';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { useState } from 'react';
+import { useModalContext } from '../../context/modalContext/ModalContext';
 
 const Modal = ({ id }) => {
 	const [trailers, setTrailers] = useState([]);
-	const [currentTrailer, setCurrentTrailer] = useState(1);
+	const [currentTrailer, setCurrentTrailer] = useState(0);
+	const { isModalOpen, dispatch } = useModalContext();
 
 	const opts = {
 		height: '550',
@@ -28,11 +30,31 @@ const Modal = ({ id }) => {
 			setTrailers(res.data.results);
 		};
 		getTrailers();
-	}, [id]);
+	}, []);
+
+	useEffect(() => {
+		const close = (e) => {
+			if (e.keyCode === 27) {
+				dispatch({ type: 'CLOSE_MODAL' });
+			}
+		};
+		window.addEventListener('keydown', close);
+		return () => window.removeEventListener('keydown', close);
+	}, []);
+
+	const handleClick = () => {
+		dispatch({ type: 'CLOSE_MODAL' });
+	};
+
+	const handleTrailer = (e, type) => {
+		e.stopPropagation();
+		if (type === 'NEXT') setCurrentTrailer((prev) => prev + 1);
+		if (type === 'PREV') setCurrentTrailer((prev) => prev - 1);
+	};
 
 	return (
-		<div className="modal-bg">
-			<div className="close-btn">
+		<div className="modal-bg" onClick={handleClick}>
+			<div className="close-btn" onClick={handleClick}>
 				<Close />{' '}
 			</div>
 			<div className="modal-container">
@@ -45,7 +67,7 @@ const Modal = ({ id }) => {
 						{currentTrailer !== 0 && (
 							<span
 								className="trailer-icon-wrapper"
-								onClick={() => setCurrentTrailer((prev) => prev - 1)}
+								onClick={(e) => handleTrailer(e, 'PREV')}
 							>
 								<ArrowBackIos className="trailer-icon" /> Previous Trailer
 							</span>
@@ -55,7 +77,7 @@ const Modal = ({ id }) => {
 						{currentTrailer !== trailers.length - 1 && (
 							<span
 								className="trailer-icon-wrapper"
-								onClick={() => setCurrentTrailer((prev) => prev + 1)}
+								onClick={(e) => handleTrailer(e, 'NEXT')}
 							>
 								Next Trailer <ArrowForwardIos className="trailer-icon" />{' '}
 							</span>

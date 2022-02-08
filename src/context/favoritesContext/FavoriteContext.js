@@ -23,7 +23,6 @@ const FavoriteReducer = (state, action) => {
 
 export const FavoriteContextProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(FavoriteReducer, INITIAL_STATE);
-	dispatch({ type: 'REMOVE_FROM_FAVS', payload: 'prison break' });
 	return (
 		<FavoriteContext.Provider value={{ ...state, dispatch }}>
 			{children}{' '}
