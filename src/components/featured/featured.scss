@@ -1,5 +1,5 @@
 .featured {
-	height: 90vh;
+	height: 95vh;
 	position: relative;
 
 	.category {
@@ -31,16 +31,43 @@
 	}
 
 	.info {
-		width: 35%;
+		width: 40%;
 		position: absolute;
 		left: 50px;
-		bottom: 100px;
+		bottom: 50px;
 		color: white;
 		display: flex;
 		flex-direction: column;
+		padding: 3rem 1rem;
 
-		img {
-			width: 400px;
+		h1 {
+			font-size: 3rem;
+			text-transform: uppercase;
+			font-weight: 900;
+		}
+
+		.info-year-wrapper {
+			// display: flex;
+			// align-items: center;
+			// justify-content: space-between;
+			// width: 80%;
+			.year,
+			.genre,
+			.duration {
+				font-size: 1.2rem;
+				font-weight: 500;
+			}
+
+			.year::after,
+			.genre::after {
+				content: '';
+				display: inline-block;
+				width: 5px;
+				height: 5px;
+				background-color: #46d369;
+				margin: 0 0.5rem 0.2rem;
+				border-radius: 50%;
+			}
 		}
 
 		.desc {
@@ -49,7 +76,7 @@
 
 		.buttons {
 			display: flex;
-
+			margin-top: 2rem;
 			button {
 				padding: 10px 20px;
 				border: none;
