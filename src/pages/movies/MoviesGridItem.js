@@ -9,7 +9,7 @@ import { useModalContext } from '../../context/modalContext/ModalContext';
 import { formatDuration } from '../../functions/formatDuration';
 import { genresMovie } from '../../helpers/genres';
 
-const MoviesGridItem = ({ movie }) => {
+const MoviesGridItem = ({ movie, handleSetMovie }) => {
 	const [duration, setDuration] = useState(null);
 	const { dispatch } = useModalContext();
 
@@ -36,8 +36,9 @@ const MoviesGridItem = ({ movie }) => {
 
 	const handleClick = () => {
 		dispatch({ type: 'OPEN_INFO_MODAL' });
-		console.log('clicked');
+		handleSetMovie(movie, duration);
 	};
+
 	return (
 		<>
 			<div className="grid-item">

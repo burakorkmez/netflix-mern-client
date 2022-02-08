@@ -77,7 +77,8 @@
 		.buttons {
 			display: flex;
 			margin-top: 2rem;
-			button {
+			.play,
+			.more {
 				padding: 10px 20px;
 				border: none;
 				border-radius: 5px;
@@ -88,11 +89,8 @@
 				font-weight: 500;
 				margin-right: 10px;
 				cursor: pointer;
-
-				&.play {
-					background-color: white;
-					color: var(--main-color);
-				}
+				color: var(--main-color);
+				background-color: white;
 
 				&.more {
 					background-color: gray;
