@@ -6,12 +6,43 @@
 	padding: 10px 20px;
 	margin-top: 40px;
 
-	.listTitle {
+	.list-title {
 		color: white;
+		display: flex;
 		font-size: 20px;
 		font-weight: 500;
-		margin: 20px 0;
+		margin: 20px 10px 20px 0;
 		text-transform: uppercase;
+		span {
+			cursor: pointer;
+		}
+		.list-title-wrapper {
+			cursor: pointer;
+			align-items: center;
+			display: flex;
+
+			.icon {
+				left: 0;
+				transition: 0.6s ease left;
+				position: relative;
+			}
+
+			.list-p {
+				transition: all 0.8s ease;
+				visibility: hidden;
+				opacity: 0;
+			}
+
+			&:hover .list-p {
+				margin-left: 18px;
+				position: relative;
+				visibility: visible;
+				opacity: 1;
+			}
+			&:hover .icon {
+				left: 100%;
+			}
+		}
 	}
 
 	.slider-item-wraper {

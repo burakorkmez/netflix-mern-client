@@ -7,6 +7,7 @@ import Profile from './pages/profile/Profile';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { useState, useContext } from 'react';
 import { AuthContext } from './context/authContext/AuthContext';
+import Movies from './pages/movies/Movies';
 
 function App() {
 	const { user } = useContext(AuthContext);
@@ -26,7 +27,7 @@ function App() {
 					{!user ? <Register /> : <Redirect to="/" />}
 				</Route>
 				<Route exact path="/">
-					{user ? <Home type={''} /> : <Redirect to="/login" />}
+					{user ? <Redirect to="/movies" /> : <Redirect to="/login" />}
 				</Route>
 
 				<Route exact path="/movies">
@@ -52,6 +53,9 @@ function App() {
 					) : (
 						<Redirect to="/login" />
 					)}
+				</Route>
+				<Route exact path="/movies/:genre">
+					{user ? <Movies /> : <Redirect to="/login" />}
 				</Route>
 				<Route path="/watch">
 					{user ? <Watch /> : <Redirect to="/login" />}

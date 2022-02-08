@@ -1,7 +1,7 @@
 import { InfoOutlined, PlayArrow } from '@material-ui/icons';
 import { useEffect, useState } from 'react';
 import { formatDuration } from '../../functions/formatDuration';
-import { genres } from '../../helpers/genres';
+import { genresMovie, genresSeries } from '../../helpers/genres';
 import './featured.scss';
 import Modal from '../modal/Modal';
 import { useModalContext } from '../../context/modalContext/ModalContext';
@@ -9,8 +9,11 @@ import { useModalContext } from '../../context/modalContext/ModalContext';
 export default function Featured({ type, handleChange }) {
 	const [content, setContent] = useState(null);
 	const [duration, setDuration] = useState(null);
+	const [genres, setGenres] = useState(
+		type === 'movie' ? genresMovie : genresSeries
+	);
 
-	const { isModalOpen, dispatch } = useModalContext();
+	const { isYoutubeModalOpen, dispatch } = useModalContext();
 
 	useEffect(() => {
 		const getRandomContent = async () => {
@@ -34,7 +37,7 @@ export default function Featured({ type, handleChange }) {
 		getRandomContent();
 	}, []);
 
-	// get genres of featured movie
+	// get genres of featured movie/series
 	const genresOfMovie = [];
 	content?.genre_ids.forEach((id, i) => {
 		genres.forEach((genre) => {
@@ -45,7 +48,7 @@ export default function Featured({ type, handleChange }) {
 	});
 
 	const handleClick = () => {
-		dispatch({ type: 'OPEN_MODAL' });
+		dispatch({ type: 'OPEN_YOUTUBE_MODAL' });
 	};
 
 	return (
@@ -102,7 +105,7 @@ export default function Featured({ type, handleChange }) {
 					</div>
 				</div>
 			</div>
-			{isModalOpen && <Modal id={content?.id} />}
+			{isYoutubeModalOpen && <Modal id={content?.id} />}
 		</>
 	);
 }

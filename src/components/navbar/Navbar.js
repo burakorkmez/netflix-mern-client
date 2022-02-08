@@ -1,6 +1,6 @@
 import { ArrowDropDown, Notifications } from '@material-ui/icons';
 import { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { AuthContext } from '../../context/authContext/AuthContext';
 import './navbar.scss';
 
@@ -22,18 +22,15 @@ const Navbar = () => {
 			<div className="container">
 				<div className="left">
 					<img src="/assets/img/logo.png" alt="Netflix logo" />
-					<Link to="/" className="link">
-						<span>Homepage</span>
-					</Link>
-					<Link to="/series" className="link">
-						<span>Series</span>
-					</Link>
-					<Link to="/movies" className="link">
+					<NavLink to="/movies" className="link">
 						<span>Movies</span>
-					</Link>
-					<Link to="/favorites" className="link">
+					</NavLink>
+					<NavLink to="/series" className="link">
+						<span>Series</span>
+					</NavLink>
+					<NavLink to="/favorites" className="link">
 						<span>Favorites</span>
-					</Link>
+					</NavLink>
 				</div>
 				<div className="right">
 					<Notifications className="icon" />

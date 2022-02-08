@@ -5,10 +5,14 @@ export const ModalContext = createContext();
 
 const modalReducer = (state, action) => {
 	switch (action.type) {
-		case 'OPEN_MODAL':
-			return { isModalOpen: true };
-		case 'CLOSE_MODAL':
-			return { isModalOpen: false };
+		case 'OPEN_YOUTUBE_MODAL':
+			return { ...state, isYoutubeModalOpen: true };
+		case 'CLOSE_YOUTUBE_MODAL':
+			return { ...state, isYoutubeModalOpen: false };
+		case 'OPEN_INFO_MODAL':
+			return { ...state, isInfoModalOpen: true };
+		case 'CLOSE_INFO_MODAL':
+			return { ...state, isInfoModalOpen: false };
 		default:
 			return state;
 	}
@@ -17,7 +21,10 @@ const modalReducer = (state, action) => {
 // useContext
 
 export const ModalContextProvider = ({ children }) => {
-	const [state, dispatch] = useReducer(modalReducer, { isModalOpen: false });
+	const [state, dispatch] = useReducer(modalReducer, {
+		isYoutubeModalOpen: false,
+		isInfoModalOpen: false,
+	});
 	return (
 		<ModalContext.Provider value={{ ...state, dispatch }}>
 			{children}

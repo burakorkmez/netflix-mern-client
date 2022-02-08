@@ -10,7 +10,7 @@ import { useModalContext } from '../../context/modalContext/ModalContext';
 const Modal = ({ id }) => {
 	const [trailers, setTrailers] = useState([]);
 	const [currentTrailer, setCurrentTrailer] = useState(0);
-	const { isModalOpen, dispatch } = useModalContext();
+	const { dispatch } = useModalContext();
 
 	const opts = {
 		height: '550',
@@ -35,7 +35,7 @@ const Modal = ({ id }) => {
 	useEffect(() => {
 		const close = (e) => {
 			if (e.keyCode === 27) {
-				dispatch({ type: 'CLOSE_MODAL' });
+				dispatch({ type: 'CLOSE_YOUTUBE_MODAL' });
 			}
 		};
 		window.addEventListener('keydown', close);
@@ -43,7 +43,7 @@ const Modal = ({ id }) => {
 	}, []);
 
 	const handleClick = () => {
-		dispatch({ type: 'CLOSE_MODAL' });
+		dispatch({ type: 'CLOSE_YOUTUBE_MODAL' });
 	};
 
 	const handleTrailer = (e, type) => {

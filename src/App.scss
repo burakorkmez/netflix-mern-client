@@ -26,6 +26,13 @@ a {
 	color: inherit;
 	text-decoration: none;
 }
+.link.active {
+	font-weight: 900;
+	font-size: 1.1rem;
+	span {
+		border-bottom: 1px solid red;
+	}
+}
 
 .error {
 	color: red;
