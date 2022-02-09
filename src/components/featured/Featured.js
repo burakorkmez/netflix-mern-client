@@ -5,37 +5,50 @@ import { genresMovie, genresSeries } from '../../helpers/genres';
 import './featured.scss';
 import Modal from '../modal/Modal';
 import { useModalContext } from '../../context/modalContext/ModalContext';
+import axios from 'axios';
 
 export default function Featured({ type, handleChange }) {
 	const [content, setContent] = useState(null);
 	const [duration, setDuration] = useState(null);
+	const [numberOfSeasons, setNumberOfSeasons] = useState(null);
 	const [genres, setGenres] = useState(
 		type === 'movie' ? genresMovie : genresSeries
 	);
 
 	const { isYoutubeModalOpen, dispatch } = useModalContext();
+	const moviesOrSeries = type === 'movie' ? 'movie' : 'tv';
+
+	const randomNumberForMovie = Math.floor(Math.random() * 19);
+	const randomNumberForPage = Math.floor(Math.random() * 3) + 1;
 
 	useEffect(() => {
 		const getRandomContent = async () => {
 			try {
-				const res = await fetch(
-					`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_TMDB_MOVIE_API}&language=en-US`
+				const res = await axios.get(
+					`https://api.themoviedb.org/3/${moviesOrSeries}/popular?api_key=${process.env.REACT_APP_TMDB_MOVIE_API}&language=en-US&page=${randomNumberForPage}`
 				);
-				const data = await res.json();
-				const randomNumber = Math.floor(Math.random() * (19 + 1));
-				setContent(data.results[randomNumber]);
+				setContent(res.data.results[randomNumberForMovie]);
 
-				const resDuration = await fetch(
-					`https://api.themoviedb.org/3/movie/${data.results[randomNumber].id}?api_key=${process.env.REACT_APP_TMDB_MOVIE_API}&language=en-US`
-				);
-				const durationData = await resDuration.json();
-				setDuration(durationData.runtime);
+				if (moviesOrSeries === 'movie') {
+					const resDuration = await axios.get(
+						`https://api.themoviedb.org/3/${moviesOrSeries}/${res.data.results[randomNumberForMovie].id}?api_key=${process.env.REACT_APP_TMDB_MOVIE_API}&language=en-US`
+					);
+					setDuration(resDuration.data.runtime);
+				} else {
+					const resSeasonNumb = await axios.get(
+						`https://api.themoviedb.org/3/${moviesOrSeries}/${res.data.results[randomNumberForMovie].id}?api_key=${process.env.REACT_APP_TMDB_MOVIE_API}&language=en-US`
+					);
+					const seasonNumData = await resSeasonNumb.json();
+					setNumberOfSeasons(resSeasonNumb.data.number_of_seasons);
+				}
 			} catch (err) {
 				console.log(err);
 			}
 		};
 		getRandomContent();
-	}, []);
+	}, [moviesOrSeries]);
+
+	console.log(content);
 
 	// get genres of featured movie/series
 	const genresOfMovie = [];
@@ -46,10 +59,17 @@ export default function Featured({ type, handleChange }) {
 			}
 		});
 	});
-
-	const handleClick = () => {
-		dispatch({ type: 'OPEN_YOUTUBE_MODAL' });
-	};
+	{
+		/* {moviesOrSeries !== 'movie' &&
+	content?.genre_ids.map((genre, i) => (
+		<>
+			<span>
+				{genre}
+				{i !== genresOfMovie.length - 1 && ', '}
+			</span>
+		</>
+	))} */
+	}
 
 	return (
 		<>
@@ -75,11 +95,19 @@ export default function Featured({ type, handleChange }) {
 					alt=""
 				/>
 				<div className="info">
-					<h1>{content?.title}</h1>
+					<h1>
+						{moviesOrSeries === 'movie'
+							? content?.original_title
+							: content?.original_name}
+					</h1>
 					<span className="desc">{content?.overview}</span>
 					<div className="info-year-wrapper">
 						<span className="year">
-							{new Date(content?.release_date).getFullYear()}
+							{new Date(
+								moviesOrSeries === 'movie'
+									? content?.release_date
+									: content?.first_air_date
+							).getFullYear()}
 						</span>
 						<span className="genre">
 							{genresOfMovie.map((genre, i) => (
@@ -91,10 +119,18 @@ export default function Featured({ type, handleChange }) {
 								</>
 							))}
 						</span>
-						<span className="duration">{formatDuration(duration)}</span>
+						<span className="duration">
+							{moviesOrSeries === 'movie'
+								? formatDuration(duration)
+								: numberOfSeasons + ' Season'}
+							{numberOfSeasons !== 1 && 's'}
+						</span>
 					</div>
 					<div className="buttons">
-						<button className="play" onClick={handleClick}>
+						<button
+							className="play"
+							onClick={() => dispatch({ type: 'OPEN_YOUTUBE_MODAL' })}
+						>
 							<PlayArrow />
 							<span>Play</span>
 						</button>
@@ -105,7 +141,9 @@ export default function Featured({ type, handleChange }) {
 					</div>
 				</div>
 			</div>
-			{isYoutubeModalOpen && <Modal id={content?.id} />}
+			{isYoutubeModalOpen && (
+				<Modal id={content?.id} moviesOrSeries={moviesOrSeries} />
+			)}
 		</>
 	);
 }

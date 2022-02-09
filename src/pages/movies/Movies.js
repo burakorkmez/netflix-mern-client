@@ -24,6 +24,8 @@ const Movies = () => {
 	const searchedGenre = genresMovie.find(
 		(g) => g.name.toLowerCase() === genre.toLowerCase()
 	);
+
+	// add open-modal class to body
 	const addBodyClass = (className) => document.body.classList.add(className);
 	const removeBodyClass = (className) =>
 		document.body.classList.remove(className);
@@ -77,7 +79,7 @@ const Movies = () => {
 			<div className="movies-page">
 				<div className="container genre-title">
 					<ArrowBack className="back-icon" />
-					<h1>Adventure Movies</h1>
+					<h1>{genre.charAt(0).toUpperCase() + genre.slice(1)} Movies</h1>
 				</div>
 				<div className="container grid">
 					{movies.map((movie) => (

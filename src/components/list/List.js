@@ -25,13 +25,13 @@ import { useLocation } from 'react-router-dom';
 // install Swiper modules
 SwiperCore.use([Pagination, Navigation]);
 
-export default function List({ genre }) {
+export default function List({ genre, moviesOrSeries }) {
 	const [movies, setMovies] = useState([]);
 	const { pathname } = useLocation();
 	useEffect(() => {
 		const getMovies = async () => {
 			const res = await axios.get(
-				`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_MOVIE_API}&language=en-US&page=1&with_genres=${genre.id}#`
+				`https://api.themoviedb.org/3/discover/${moviesOrSeries}?api_key=${process.env.REACT_APP_TMDB_MOVIE_API}&language=en-US&page=1&with_genres=${genre.id}#`
 			);
 			setMovies(res.data.results);
 		};
@@ -84,7 +84,11 @@ export default function List({ genre }) {
 								className="swiperImg"
 							/>
 							<div className="innerContext">
-								<p className="movieTitle">{movie.original_title}</p>
+								<p className="movieTitle">
+									{moviesOrSeries === 'movie'
+										? movie.original_title
+										: movie.original_name}
+								</p>
 								<div className="icons">
 									<Link to={`/watch`} className="link">
 										<PlayArrow className="icon" />
@@ -97,9 +101,12 @@ export default function List({ genre }) {
 									/>
 									<ThumbDownOutlined className="icon" />
 								</div>
-								{/* <span className="movieLimit">+{movie.limit}</span> */}
 								<span className="movieYear">
-									{new Date(movie.release_date).getFullYear()}
+									{new Date(
+										moviesOrSeries === 'movie'
+											? movie.release_date
+											: movie.first_air_date
+									).getFullYear()}
 								</span>
 								<p className="movieDesc">{movie.overview}</p>
 							</div>

@@ -11,12 +11,14 @@ const Home = ({ type, handleChange }) => {
 		setGenres(type === 'movie' ? genresMovie : genresSeries);
 	}, [type]);
 
+	const moviesOrSeries = type === 'movie' ? 'movie' : 'tv';
+
 	return (
 		<div className="home">
 			<Navbar />
 			<Featured type={type} handleChange={handleChange} />
 			{genres?.map((genre) => (
-				<List genre={genre} key={genre.id} />
+				<List genre={genre} key={genre.id} moviesOrSeries={moviesOrSeries} />
 			))}
 		</div>
 	);
