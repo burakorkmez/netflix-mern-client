@@ -1,6 +1,7 @@
 import { AddCircleOutline, Close, PlayArrow } from '@material-ui/icons';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { useModalContext } from '../../context/modalContext/ModalContext';
 import { formatDuration } from '../../functions/formatDuration';
 import getGenresOfMovie from '../../functions/getGenresOfMovie';
@@ -12,6 +13,7 @@ const InfoModal = ({ movie, duration, expandedMovieData }) => {
 	const genresOfMovie = getGenresOfMovie(movie);
 	const [similarTitleTrailer, setSimilarTitleTrailer] = useState(null);
 	const { dispatch, isYoutubeModalOpen } = useModalContext();
+	const { movieOrSeries } = useParams();
 
 	useEffect(() => {
 		const close = (e) => {
@@ -31,6 +33,7 @@ const InfoModal = ({ movie, duration, expandedMovieData }) => {
 		setSimilarTitleTrailer(id);
 	};
 
+	console.log(expandedMovieData);
 	return (
 		<div
 			className="info-modal"
@@ -71,10 +74,20 @@ const InfoModal = ({ movie, duration, expandedMovieData }) => {
 							<div className="flex">
 								<p className="rating"> Rating: {movie.vote_average}/10</p>
 								<p className="year">
-									{new Date(movie.release_date).getFullYear()}
+									{movieOrSeries === 'movies' &&
+										new Date(movie.release_date).getFullYear()}
+									{movieOrSeries === 'series' &&
+										new Date(movie.first_air_date).getFullYear()}
 								</p>
 								<p className="lang">{movie.original_language.toUpperCase()}</p>
-								<p className="duration">{formatDuration(duration)}</p>
+								<p className="duration">
+									{movieOrSeries === 'movies' && formatDuration(duration)}
+									{movieOrSeries === 'series' &&
+										expandedMovieData.seasons.length + ' Season'}
+									{movieOrSeries === 'series' &&
+										expandedMovieData.seasons.length > 1 &&
+										's'}
+								</p>
 							</div>
 							<p className="desc">{movie.overview}</p>
 						</div>
@@ -88,7 +101,7 @@ const InfoModal = ({ movie, duration, expandedMovieData }) => {
 								</div>
 								<div>
 									<span>Casts: </span>
-									{expandedMovieData.casts.cast.slice(0, 4).map((cast, i) => (
+									{expandedMovieData.credits.cast.slice(0, 4).map((cast, i) => (
 										<b className="cast-name">{cast.name}</b>
 									))}
 									<a href="#about" className="link-more">

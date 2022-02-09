@@ -6,8 +6,9 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { useState } from 'react';
 import { useModalContext } from '../../context/modalContext/ModalContext';
+import { useParams } from 'react-router-dom';
 
-const Modal = ({ id, moviesOrSeries }) => {
+const Modal = ({ id }) => {
 	const [trailers, setTrailers] = useState([]);
 	const [currentTrailer, setCurrentTrailer] = useState(0);
 	const { dispatch } = useModalContext();
@@ -20,11 +21,13 @@ const Modal = ({ id, moviesOrSeries }) => {
 			autoplay: 1,
 		},
 	};
-	console.log(moviesOrSeries);
+	const { movieOrSeries } = useParams();
+	const formatUrl = movieOrSeries === 'movies' ? 'movie' : 'tv';
+	console.log(formatUrl);
 	useEffect(() => {
 		const getTrailers = async () => {
 			const res = await axios.get(
-				`https://api.themoviedb.org/3/${moviesOrSeries}/${id}/videos?api_key=${process.env.REACT_APP_TMDB_MOVIE_API}&language=en-US`
+				`https://api.themoviedb.org/3/${formatUrl}/${id}/videos?api_key=${process.env.REACT_APP_TMDB_MOVIE_API}&language=en-US`
 			);
 			console.log(res.data);
 			setTrailers(res.data.results);

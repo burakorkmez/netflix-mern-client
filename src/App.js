@@ -54,7 +54,7 @@ function App() {
 						<Redirect to="/login" />
 					)}
 				</Route>
-				<Route exact path="/movies/:genre">
+				<Route exact path="/:movieOrSeries/:genre">
 					{user ? <Movies /> : <Redirect to="/login" />}
 				</Route>
 				<Route path="/watch">

@@ -38,7 +38,6 @@ export default function Featured({ type, handleChange }) {
 					const resSeasonNumb = await axios.get(
 						`https://api.themoviedb.org/3/${moviesOrSeries}/${res.data.results[randomNumberForMovie].id}?api_key=${process.env.REACT_APP_TMDB_MOVIE_API}&language=en-US`
 					);
-					const seasonNumData = await resSeasonNumb.json();
 					setNumberOfSeasons(resSeasonNumb.data.number_of_seasons);
 				}
 			} catch (err) {

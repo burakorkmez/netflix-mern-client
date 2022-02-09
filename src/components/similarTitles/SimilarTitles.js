@@ -3,6 +3,7 @@ import axios from 'axios';
 import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { useModalContext } from '../../context/modalContext/ModalContext';
 import AboutMovie from '../aboutMovie/AboutMovie';
 
@@ -15,11 +16,13 @@ const SimilarTitles = ({
 }) => {
 	const [similarTitles, setSimilarTitles] = useState([]);
 	const { dispatch } = useModalContext();
+	const { movieOrSeries } = useParams();
+	const formattedUrl = movieOrSeries === 'movies' ? 'movie' : 'tv';
 
 	useEffect(() => {
 		const getSimilarTitles = async () => {
 			const res = await axios.get(
-				`https://api.themoviedb.org/3/movie/${movie.id}?api_key=${process.env.REACT_APP_TMDB_MOVIE_API}&append_to_response=release_dates,credits,recommendations#`
+				`https://api.themoviedb.org/3/${formattedUrl}/${movie.id}?api_key=${process.env.REACT_APP_TMDB_MOVIE_API}&append_to_response=release_dates,credits,recommendations`
 			);
 
 			console.log(res.data);
@@ -32,6 +35,7 @@ const SimilarTitles = ({
 		dispatch({ type: 'OPEN_YOUTUBE_MODAL' });
 		handleSimilarTitleTrailer(id);
 	};
+	console.log(expandedMovieData);
 
 	return (
 		<>
@@ -46,13 +50,21 @@ const SimilarTitles = ({
 								alt=""
 							/>
 							<div className="info">
-								<h3>{similarTitle.original_title}</h3>
+								<h3>
+									{movieOrSeries === 'movies' && similarTitle.original_title}
+									{movieOrSeries === 'series' && similarTitle.original_name}
+								</h3>
 								<div className="">
 									<span className="rating">
 										Rating: {similarTitle.vote_average}
 									</span>
-									<span className="year">2022</span>
-									<span className="duration">1 h 35 min.</span>
+									<span className="year">
+										{movieOrSeries === 'movies' &&
+											new Date(similarTitle.released_date).getFullYear()}
+										{movieOrSeries === 'series' &&
+											new Date(similarTitle.first_air_date).getFullYear()}
+									</span>
+									{/* <span className="duration">1 h 35 min.</span> */}
 								</div>
 							</div>
 						</div>
