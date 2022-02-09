@@ -16,7 +16,7 @@ const Movies = () => {
 	const [movie, setMovie] = useState(null);
 	const [duration, setDuration] = useState(null);
 	const { genre } = useParams();
-	const { isInfoModalOpen } = useModalContext();
+	const { isInfoModalOpen, isYoutubeModalOpen } = useModalContext();
 
 	const searchedGenre = genresMovie.find(
 		(g) => g.name.toLowerCase() === genre.toLowerCase()
@@ -30,13 +30,13 @@ const Movies = () => {
 			setMovies(res.data.results);
 		};
 		getMovies();
-	}, []);
+	}, [searchedGenre.id]);
 
 	const handleSetMovie = (movie, duration) => {
 		setMovie(movie);
 		setDuration(duration);
 	};
-
+	console.log(isInfoModalOpen, isYoutubeModalOpen);
 	return (
 		<>
 			<Navbar />

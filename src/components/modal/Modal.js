@@ -42,7 +42,8 @@ const Modal = ({ id }) => {
 		return () => window.removeEventListener('keydown', close);
 	}, []);
 
-	const handleClick = () => {
+	const handleClick = (e) => {
+		e.stopPropagation();
 		dispatch({ type: 'CLOSE_YOUTUBE_MODAL' });
 	};
 

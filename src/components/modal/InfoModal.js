@@ -4,11 +4,11 @@ import { useModalContext } from '../../context/modalContext/ModalContext';
 import { formatDuration } from '../../functions/formatDuration';
 import getGenresOfMovie from '../../functions/getGenresOfMovie';
 import './infoModal.scss';
+import Modal from './Modal';
 
-const InfoModal = ({ movie, duration }) => {
+const InfoModal = ({ movie, duration, trailers }) => {
 	const genresOfMovie = getGenresOfMovie(movie);
-	const { dispatch } = useModalContext();
-
+	const { dispatch, isYoutubeModalOpen } = useModalContext();
 	useEffect(() => {
 		const close = (e) => {
 			if (e.keyCode === 27) {
@@ -18,12 +18,19 @@ const InfoModal = ({ movie, duration }) => {
 		window.addEventListener('keydown', close);
 		return () => window.removeEventListener('keydown', close);
 	}, []);
+
+	const handleClick = () => {
+		dispatch({ type: 'OPEN_YOUTUBE_MODAL' });
+	};
+
 	return (
 		<div
 			className="info-modal"
 			onClick={() => dispatch({ type: 'CLOSE_INFO_MODAL' })}
 		>
-			<div className="container">
+			{isYoutubeModalOpen && <Modal id={movie.id} />}
+
+			<div className="container" onClick={(e) => e.stopPropagation()}>
 				<div
 					className="close-btn"
 					onClick={() => dispatch({ type: 'CLOSE_INFO_MODAL' })}
@@ -39,7 +46,7 @@ const InfoModal = ({ movie, duration }) => {
 					<div className="movie-info">
 						<h1 className="movie-title">{movie.original_title}</h1>
 						<div className="movie-btn-wrapper">
-							<button className="play">
+							<button className="play" onClick={handleClick}>
 								<PlayArrow />
 								<span>Play</span>
 							</button>

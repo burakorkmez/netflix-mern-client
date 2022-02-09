@@ -11,6 +11,7 @@ import { genresMovie } from '../../helpers/genres';
 
 const MoviesGridItem = ({ movie, handleSetMovie }) => {
 	const [duration, setDuration] = useState(null);
+
 	const { dispatch } = useModalContext();
 
 	useEffect(() => {
@@ -39,10 +40,15 @@ const MoviesGridItem = ({ movie, handleSetMovie }) => {
 		handleSetMovie(movie, duration);
 	};
 
+	const handleVideoIconClick = () => {
+		dispatch({ type: 'OPEN_INFO_MODAL' });
+		dispatch({ type: 'OPEN_YOUTUBE_MODAL' });
+	};
+
 	return (
 		<>
 			<div className="grid-item">
-				<div className="video-player-icon">
+				<div className="video-player-icon" onClick={handleVideoIconClick}>
 					<PlayCircleFilledWhiteOutlined className="icon" />
 				</div>
 				<img
