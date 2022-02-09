@@ -14,29 +14,62 @@ import MoviesGridItem from './MoviesGridItem';
 const Movies = () => {
 	const [movies, setMovies] = useState([]);
 	const [movie, setMovie] = useState(null);
+	const [expandedMovieData, setExpandedMovieData] = useState([]);
 	const [duration, setDuration] = useState(null);
+	const [page, setPage] = useState(1);
+
 	const { genre } = useParams();
-	const { isInfoModalOpen, isYoutubeModalOpen } = useModalContext();
+	const { isInfoModalOpen } = useModalContext();
 
 	const searchedGenre = genresMovie.find(
 		(g) => g.name.toLowerCase() === genre.toLowerCase()
 	);
+	const addBodyClass = (className) => document.body.classList.add(className);
+	const removeBodyClass = (className) =>
+		document.body.classList.remove(className);
 
 	useEffect(() => {
 		const getMovies = async () => {
 			const res = await axios.get(
-				`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_MOVIE_API}&language=en-US&with_genres=${searchedGenre.id}#`
+				`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_MOVIE_API}&language=en-US&&page=${page}&with_genres=${searchedGenre.id}#`
 			);
-			setMovies(res.data.results);
+			setMovies((prev) => [...prev, ...res.data.results]);
 		};
 		getMovies();
-	}, [searchedGenre.id]);
+	}, [searchedGenre.id, page]);
 
-	const handleSetMovie = (movie, duration) => {
+	const increasePageNum = () => {
+		// check if scrolled to the bottom of the page
+		if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+			setPage((prev) => prev + 1);
+		}
+	};
+
+	useEffect(() => {
+		// set up
+		if (isInfoModalOpen) {
+			addBodyClass('modal-open');
+
+			// Clean up
+			return () => {
+				removeBodyClass('modal-open');
+			};
+		}
+	}, [isInfoModalOpen]);
+
+	useEffect(() => {
+		// set up
+		window.addEventListener('scroll', increasePageNum);
+
+		// clean up
+		return () => window.removeEventListener('scroll', increasePageNum);
+	}, []);
+
+	const handleSetMovie = (movie, duration, expandedMovieData) => {
 		setMovie(movie);
 		setDuration(duration);
+		setExpandedMovieData(expandedMovieData);
 	};
-	console.log(isInfoModalOpen, isYoutubeModalOpen);
 	return (
 		<>
 			<Navbar />
@@ -53,7 +86,13 @@ const Movies = () => {
 						</>
 					))}
 				</div>
-				{isInfoModalOpen && <InfoModal movie={movie} duration={duration} />}
+				{isInfoModalOpen && (
+					<InfoModal
+						movie={movie}
+						duration={duration}
+						expandedMovieData={expandedMovieData}
+					/>
+				)}
 			</div>
 		</>
 	);

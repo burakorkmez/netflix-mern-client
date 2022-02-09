@@ -72,6 +72,23 @@
 					span {
 						color: #b0b0b0;
 					}
+
+					div {
+						margin-bottom: 1rem;
+					}
+					.link-more {
+						border-bottom: 1px solid #fff;
+					}
+
+					.cast-name:not(:last-child)::after {
+						content: ', ';
+					}
+					.cast-name:last-child::after {
+						content: '...';
+					}
+					.genre-name:not(:last-child)::after {
+						content: ', ';
+					}
 				}
 			}
 		}
@@ -103,31 +120,6 @@
 			.movie-title {
 				margin-right: 1rem;
 				margin-bottom: 2rem;
-			}
-
-			.movie-btn-wrapper {
-				display: flex;
-				align-items: center;
-
-				.play {
-					padding: 10px 20px;
-					border: none;
-					border-radius: 5px;
-					display: flex;
-					align-items: center;
-					justify-content: center;
-					font-size: 18px;
-					font-weight: 500;
-					margin-right: 1rem;
-					cursor: pointer;
-					background-color: white;
-					color: var(--main-color);
-				}
-
-				.icon {
-					font-size: 2.5rem;
-					cursor: pointer;
-				}
 			}
 		}
 	}

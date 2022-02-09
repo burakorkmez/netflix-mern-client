@@ -1,14 +1,18 @@
 import { AddCircleOutline, Close, PlayArrow } from '@material-ui/icons';
+import { useState } from 'react';
 import { useEffect } from 'react';
 import { useModalContext } from '../../context/modalContext/ModalContext';
 import { formatDuration } from '../../functions/formatDuration';
 import getGenresOfMovie from '../../functions/getGenresOfMovie';
+import SimilarTitles from '../similarTitles/SimilarTitles';
 import './infoModal.scss';
 import Modal from './Modal';
 
-const InfoModal = ({ movie, duration, trailers }) => {
+const InfoModal = ({ movie, duration, expandedMovieData }) => {
 	const genresOfMovie = getGenresOfMovie(movie);
+	const [similarTitleTrailer, setSimilarTitleTrailer] = useState(null);
 	const { dispatch, isYoutubeModalOpen } = useModalContext();
+
 	useEffect(() => {
 		const close = (e) => {
 			if (e.keyCode === 27) {
@@ -23,12 +27,18 @@ const InfoModal = ({ movie, duration, trailers }) => {
 		dispatch({ type: 'OPEN_YOUTUBE_MODAL' });
 	};
 
+	const handleSimilarTitleTrailer = (id) => {
+		setSimilarTitleTrailer(id);
+	};
+
 	return (
 		<div
 			className="info-modal"
 			onClick={() => dispatch({ type: 'CLOSE_INFO_MODAL' })}
 		>
-			{isYoutubeModalOpen && <Modal id={movie.id} />}
+			{isYoutubeModalOpen && (
+				<Modal id={similarTitleTrailer ? similarTitleTrailer : movie.id} />
+			)}
 
 			<div className="container" onClick={(e) => e.stopPropagation()}>
 				<div
@@ -70,17 +80,30 @@ const InfoModal = ({ movie, duration, trailers }) => {
 						</div>
 						<div>
 							<p className="movie-info-grid-genres">
-								<span>Genres:</span>{' '}
-								{genresOfMovie.map((genre, i) => (
-									<b>
-										{genre}
-										{i !== genresOfMovie.length - 1 && ', '}
-									</b>
-								))}
+								<div>
+									<span>Genres: </span>
+									{genresOfMovie.map((genre, i) => (
+										<b className="genre-name">{genre} </b>
+									))}
+								</div>
+								<div>
+									<span>Casts: </span>
+									{expandedMovieData.casts.cast.slice(0, 4).map((cast, i) => (
+										<b className="cast-name">{cast.name}</b>
+									))}
+									<a href="#about" className="link-more">
+										More
+									</a>
+								</div>
 							</p>
 						</div>
 					</div>
 				</div>
+				<SimilarTitles
+					movie={movie}
+					handleSimilarTitleTrailer={handleSimilarTitleTrailer}
+					expandedMovieData={expandedMovieData}
+				/>
 			</div>
 		</div>
 	);

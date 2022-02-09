@@ -17,7 +17,6 @@ export const useSignup = (setUsername, setEmail, emailRef) => {
 		} catch (err) {
 			setIsPending(false);
 			if (err.response.data?.err?.keyPattern?.username === 1) {
-				console.log('hopp');
 				setError('This username is already taken. Please use another one');
 			}
 			setUsername('');

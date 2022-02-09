@@ -11,18 +11,18 @@ import { genresMovie } from '../../helpers/genres';
 
 const MoviesGridItem = ({ movie, handleSetMovie }) => {
 	const [duration, setDuration] = useState(null);
-
+	const [expandedMovieData, setExpandedMovieData] = useState([]);
 	const { dispatch } = useModalContext();
 
 	useEffect(() => {
-		const getDuration = async () => {
+		const getDurationAndCasts = async () => {
 			const res = await axios.get(
-				`https://api.themoviedb.org/3/movie/${movie.id}?api_key=${process.env.REACT_APP_TMDB_MOVIE_API}&language=en-US`
+				`https://api.themoviedb.org/3/movie/${movie.id}?api_key=${process.env.REACT_APP_TMDB_MOVIE_API}&language=en-US&append_to_response=casts`
 			);
-			console.log(res);
+			setExpandedMovieData(res.data);
 			setDuration(res.data.runtime);
 		};
-		getDuration();
+		getDurationAndCasts();
 	}, [movie.id]);
 
 	// get genres of featured movie/series
@@ -37,12 +37,13 @@ const MoviesGridItem = ({ movie, handleSetMovie }) => {
 
 	const handleClick = () => {
 		dispatch({ type: 'OPEN_INFO_MODAL' });
-		handleSetMovie(movie, duration);
+		handleSetMovie(movie, duration, expandedMovieData);
 	};
 
 	const handleVideoIconClick = () => {
 		dispatch({ type: 'OPEN_INFO_MODAL' });
 		dispatch({ type: 'OPEN_YOUTUBE_MODAL' });
+		handleSetMovie(movie, duration, expandedMovieData);
 	};
 
 	return (
