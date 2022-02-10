@@ -18,14 +18,13 @@ export default function Featured({ type, handleChange }) {
 	const { isYoutubeModalOpen, dispatch } = useModalContext();
 	const moviesOrSeries = type === 'movie' ? 'movie' : 'tv';
 
-	const randomNumberForMovie = Math.floor(Math.random() * 19);
-	const randomNumberForPage = Math.floor(Math.random() * 3) + 1;
-
 	useEffect(() => {
 		const getRandomContent = async () => {
 			try {
+				const randomNumberForMovie = Math.floor(Math.random() * 19);
+
 				const res = await axios.get(
-					`https://api.themoviedb.org/3/${moviesOrSeries}/popular?api_key=${process.env.REACT_APP_TMDB_MOVIE_API}&language=en-US&page=${randomNumberForPage}`
+					`https://api.themoviedb.org/3/${moviesOrSeries}/popular?api_key=${process.env.REACT_APP_TMDB_MOVIE_API}&language=en-US&`
 				);
 				setContent(res.data.results[randomNumberForMovie]);
 
@@ -58,17 +57,6 @@ export default function Featured({ type, handleChange }) {
 			}
 		});
 	});
-	{
-		/* {moviesOrSeries !== 'movie' &&
-	content?.genre_ids.map((genre, i) => (
-		<>
-			<span>
-				{genre}
-				{i !== genresOfMovie.length - 1 && ', '}
-			</span>
-		</>
-	))} */
-	}
 
 	return (
 		<>

@@ -13,23 +13,23 @@ const Modal = ({ id }) => {
 	const [currentTrailer, setCurrentTrailer] = useState(0);
 	const { dispatch } = useModalContext();
 
+	const { movieOrSeries } = useParams();
+	const formattedUrl = movieOrSeries === 'movies' ? 'movie' : 'tv';
+
 	const opts = {
 		height: '550',
 		width: '1100',
 		playerVars: {
-			// https://developers.google.com/youtube/player_parameters
 			autoplay: 1,
 		},
 	};
-	const { movieOrSeries } = useParams();
-	const formatUrl = movieOrSeries === 'movies' ? 'movie' : 'tv';
-	console.log(formatUrl);
 	useEffect(() => {
 		const getTrailers = async () => {
 			const res = await axios.get(
-				`https://api.themoviedb.org/3/${formatUrl}/${id}/videos?api_key=${process.env.REACT_APP_TMDB_MOVIE_API}&language=en-US`
+				`https://api.themoviedb.org/3/${formattedUrl}/${id}/videos?api_key=${process.env.REACT_APP_TMDB_MOVIE_API}&language=en-US`
 			);
 			console.log(res.data);
+			if (res.data.results.length === 0) setCurrentTrailer(-1);
 			setTrailers(res.data.results);
 		};
 		getTrailers();
@@ -68,7 +68,7 @@ const Modal = ({ id }) => {
 						<span className="add-to-fav">+</span>
 					</div>
 					<div className="trailers-right">
-						{currentTrailer !== 0 && (
+						{currentTrailer !== 0 && currentTrailer !== -1 && (
 							<span
 								className="trailer-icon-wrapper"
 								onClick={(e) => handleTrailer(e, 'PREV')}
