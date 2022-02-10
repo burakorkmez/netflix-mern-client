@@ -1,8 +1,9 @@
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import './aboutMovie.scss';
 
 const AboutMovie = ({ expandedMovieData }) => {
-	const { movieOrSeries } = useParams();
+	const { pathname } = useLocation();
+	const isMovie = pathname.startsWith('/movies') && true;
 	const director = expandedMovieData.credits.crew.find(
 		(member) => member.job === 'Director'
 	);
@@ -12,8 +13,8 @@ const AboutMovie = ({ expandedMovieData }) => {
 			<h3 className="title">
 				About{' '}
 				<span>
-					{movieOrSeries === 'movies' && expandedMovieData.original_title}
-					{movieOrSeries === 'series' && expandedMovieData.original_name}
+					{isMovie && expandedMovieData.original_title}
+					{!isMovie && expandedMovieData.original_name}
 				</span>
 			</h3>
 			{director && (
@@ -47,8 +48,8 @@ const AboutMovie = ({ expandedMovieData }) => {
 			<p>
 				<span>Release Date: </span>
 				<span className="about-movie-value">
-					{movieOrSeries === 'movies' && expandedMovieData.release_date}
-					{movieOrSeries === 'series' && expandedMovieData.first_air_date}
+					{isMovie && expandedMovieData.release_date}
+					{!isMovie && expandedMovieData.first_air_date}
 				</span>
 			</p>
 		</div>

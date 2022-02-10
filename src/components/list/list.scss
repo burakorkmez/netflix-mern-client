@@ -49,28 +49,7 @@
 		width: 100%;
 		height: 100%;
 		flex: 1;
-
-		// & .innerContext {
-		// 	position: absolute;
-		// 	top: 0;
-		// 	left: 0;
-		// 	z-index: 10;
-		// 	width: 100%;
-		// 	height: 100%;
-		// 	background: white;
-
-		// 	& img {
-		// 		height: 50%;
-		// 	}
-		// }
 	}
-}
-
-.swiper-wrapper {
-	// display: flex;
-	// justify-content: center;
-	// align-items: stretch;
-	// overflow: auto !important;
 }
 
 .swiper-slide {
@@ -96,7 +75,7 @@
 	transition: all 1s;
 	// margin: 0 !important;
 	// margin-top: auto;
-	height: 231.5px !important;
+	height: 250.5px !important;
 	border-radius: 10px;
 	overflow: hidden;
 
@@ -138,26 +117,22 @@
 	text-align: left;
 
 	.movieTitle {
-		font-size: 2rem;
+		font-size: 1.4rem;
 		text-transform: uppercase;
 		margin-bottom: 10px;
+		width: 100%;
 	}
 
 	.icons {
 		display: flex;
 
 		.icon {
-			// border: 2px solid white;
-			outline-offset: 4px;
-			outline: 2px solid white;
 			border-radius: 50%;
-			margin-right: 15px;
+			margin-right: 5px;
 			z-index: 2;
 			margin-bottom: 10px;
 			cursor: pointer;
-			font-size: 1.2rem;
-			// padding: 0 3px;
-			// font-size: 25px;
+			font-size: 2rem;
 		}
 	}
 	.movieYear,

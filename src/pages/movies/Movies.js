@@ -42,10 +42,14 @@ const Movies = () => {
 		};
 		getMovies();
 	}, [searchedGenre.id, page, formattedUrl]);
+	console.log(movie);
 
 	const increasePageNum = () => {
 		// check if scrolled to the bottom of the page
-		if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+		if (
+			window.innerHeight + document.documentElement.scrollTop >=
+			document.body.offsetHeight
+		) {
 			setPage((prev) => prev + 1);
 		}
 	};
@@ -81,12 +85,12 @@ const Movies = () => {
 
 			<div className="movies-page">
 				<div className="container genre-title">
-					<ArrowBack className="back-icon" />
+					<Link to={`/${movieOrSeries}`}>
+						<ArrowBack className="back-icon" />
+					</Link>
 					<h1>
-						<Link to={`/${movieOrSeries}`}>
-							{genre.charAt(0).toUpperCase() + genre.slice(1)}{' '}
-							{movieOrSeries.charAt(0).toUpperCase() + movieOrSeries.slice(1)}
-						</Link>
+						{genre.charAt(0).toUpperCase() + genre.slice(1)}{' '}
+						{movieOrSeries.charAt(0).toUpperCase() + movieOrSeries.slice(1)}
 					</h1>
 				</div>
 				<div className="container grid">

@@ -5,8 +5,10 @@ import {
 	PlayArrow,
 	Add,
 	ThumbUpAltOutlined,
-	ThumbDownOutlined,
+	InfoOutlined,
 	ArrowForwardIos,
+	PlayCircleOutlineRounded,
+	AddCircleOutlineRounded,
 } from '@material-ui/icons';
 
 import './list.scss';
@@ -21,22 +23,39 @@ import { Swiper } from 'swiper/react';
 import { SwiperSlide } from 'swiper/react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
+import { useModalContext } from '../../context/modalContext/ModalContext';
 
 // install Swiper modules
 SwiperCore.use([Pagination, Navigation]);
 
-export default function List({ genre, moviesOrSeries }) {
+export default function List({
+	genre,
+	setIsListItemTrailerClosed,
+	getTrailerKey,
+	handleInfoModal,
+}) {
 	const [movies, setMovies] = useState([]);
 	const { pathname } = useLocation();
+
+	const { dispatch } = useModalContext();
+
+	const formattedUrl = pathname === '/movies' ? 'movie' : 'tv';
 	useEffect(() => {
 		const getMovies = async () => {
 			const res = await axios.get(
-				`https://api.themoviedb.org/3/discover/${moviesOrSeries}?api_key=${process.env.REACT_APP_TMDB_MOVIE_API}&language=en-US&page=1&with_genres=${genre.id}#`
+				`https://api.themoviedb.org/3/discover/${formattedUrl}?api_key=${process.env.REACT_APP_TMDB_MOVIE_API}&language=en-US&page=1&with_genres=${genre.id}#`
 			);
 			setMovies(res.data.results);
 		};
 		getMovies();
-	}, [genre.id]);
+	}, [genre.id, formattedUrl]);
+
+	const handleTrailer = (id) => {
+		dispatch({ type: 'OPEN_YOUTUBE_MODAL' });
+		setIsListItemTrailerClosed(false);
+		getTrailerKey(id);
+		console.log(id);
+	};
 
 	return (
 		<div className="list">
@@ -85,25 +104,24 @@ export default function List({ genre, moviesOrSeries }) {
 							/>
 							<div className="innerContext">
 								<p className="movieTitle">
-									{moviesOrSeries === 'movie'
+									{pathname === '/movies'
 										? movie.original_title
 										: movie.original_name}
 								</p>
 								<div className="icons">
-									<Link to={`/watch`} className="link">
-										<PlayArrow className="icon" />
-									</Link>
+									<span onClick={() => handleTrailer(movie.id)}>
+										<PlayCircleOutlineRounded className="icon" />
+									</span>
 
-									<Add className="icon" />
-									<ThumbUpAltOutlined
-										className="icon"
-										onClick={() => console.log('hey')}
+									<AddCircleOutlineRounded className="icon" />
+									<InfoOutlined
+										className="icon "
+										onClick={() => handleInfoModal(movie)}
 									/>
-									<ThumbDownOutlined className="icon" />
 								</div>
 								<span className="movieYear">
 									{new Date(
-										moviesOrSeries === 'movie'
+										pathname === '/movies'
 											? movie.release_date
 											: movie.first_air_date
 									).getFullYear()}

@@ -1,6 +1,7 @@
 import { AddCircleOutline, Close, PlayArrow } from '@material-ui/icons';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { useModalContext } from '../../context/modalContext/ModalContext';
 import { formatDuration } from '../../functions/formatDuration';
@@ -15,6 +16,9 @@ const InfoModal = ({ movie, duration, expandedMovieData }) => {
 	const { dispatch, isYoutubeModalOpen } = useModalContext();
 	const { movieOrSeries } = useParams();
 
+	const { pathname } = useLocation();
+	const isMovie = pathname.startsWith('/movies') && true;
+
 	useEffect(() => {
 		const close = (e) => {
 			if (e.keyCode === 27) {
@@ -27,20 +31,22 @@ const InfoModal = ({ movie, duration, expandedMovieData }) => {
 
 	const handleClick = () => {
 		dispatch({ type: 'OPEN_YOUTUBE_MODAL' });
+		setSimilarTitleTrailer(null);
 	};
 
 	const handleSimilarTitleTrailer = (id) => {
 		setSimilarTitleTrailer(id);
 	};
 
-	console.log(expandedMovieData);
 	return (
 		<div
 			className="info-modal"
 			onClick={() => dispatch({ type: 'CLOSE_INFO_MODAL' })}
 		>
 			{isYoutubeModalOpen && (
-				<Modal id={similarTitleTrailer ? similarTitleTrailer : movie.id} />
+				<Modal
+					id={similarTitleTrailer ? similarTitleTrailer : expandedMovieData.id}
+				/>
 			)}
 
 			<div className="container" onClick={(e) => e.stopPropagation()}>
@@ -53,11 +59,15 @@ const InfoModal = ({ movie, duration, expandedMovieData }) => {
 				<div class="img-wrapper">
 					<div class="img-overlay"></div>
 					<img
-						src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
+						src={`https://image.tmdb.org/t/p/original/${expandedMovieData.backdrop_path}`}
 						alt=""
 					/>
 					<div className="movie-info">
-						<h1 className="movie-title">{movie.original_title}</h1>
+						<h1 className="movie-title">
+							{isMovie
+								? expandedMovieData.original_title
+								: expandedMovieData.original_name}
+						</h1>
 						<div className="movie-btn-wrapper">
 							<button className="play" onClick={handleClick}>
 								<PlayArrow />
@@ -72,24 +82,24 @@ const InfoModal = ({ movie, duration, expandedMovieData }) => {
 					<div className="movie-info-grid">
 						<div className="movie-info-grid-overview">
 							<div className="flex">
-								<p className="rating"> Rating: {movie.vote_average}/10</p>
-								<p className="year">
-									{movieOrSeries === 'movies' &&
-										new Date(movie.release_date).getFullYear()}
-									{movieOrSeries === 'series' &&
-										new Date(movie.first_air_date).getFullYear()}
+								<p className="rating">
+									{' '}
+									Rating: {expandedMovieData.vote_average}/10
 								</p>
-								<p className="lang">{movie.original_language.toUpperCase()}</p>
+								<p className="year">
+									{isMovie && new Date(movie.release_date).getFullYear()}
+									{!isMovie && new Date(movie.first_air_date).getFullYear()}
+								</p>
+								<p className="lang">
+									{expandedMovieData.original_language.toUpperCase()}
+								</p>
 								<p className="duration">
-									{movieOrSeries === 'movies' && formatDuration(duration)}
-									{movieOrSeries === 'series' &&
-										expandedMovieData.seasons.length + ' Season'}
-									{movieOrSeries === 'series' &&
-										expandedMovieData.seasons.length > 1 &&
-										's'}
+									{isMovie && formatDuration(duration)}
+									{!isMovie && expandedMovieData.seasons.length + ' Season'}
+									{!isMovie && expandedMovieData.seasons.length > 1 && 's'}
 								</p>
 							</div>
-							<p className="desc">{movie.overview}</p>
+							<p className="desc">{expandedMovieData.overview}</p>
 						</div>
 						<div>
 							<p className="movie-info-grid-genres">

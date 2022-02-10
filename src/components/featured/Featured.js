@@ -7,7 +7,16 @@ import Modal from '../modal/Modal';
 import { useModalContext } from '../../context/modalContext/ModalContext';
 import axios from 'axios';
 
-export default function Featured({ type, handleChange }) {
+export default function Featured({
+	type,
+	handleChange,
+	trailerKey,
+	setTrailerKey,
+	isFeaturedTrailerClosed,
+	setIsFeaturedTrailerClosed,
+	isListItemTrailerClosed,
+	setIsListItemTrailerClosed,
+}) {
 	const [content, setContent] = useState(null);
 	const [duration, setDuration] = useState(null);
 	const [numberOfSeasons, setNumberOfSeasons] = useState(null);
@@ -57,6 +66,12 @@ export default function Featured({ type, handleChange }) {
 			}
 		});
 	});
+
+	const handlePlayTrailer = () => {
+		setTrailerKey(null);
+		setIsFeaturedTrailerClosed(false);
+		dispatch({ type: 'OPEN_YOUTUBE_MODAL' });
+	};
 
 	return (
 		<>
@@ -114,10 +129,7 @@ export default function Featured({ type, handleChange }) {
 						</span>
 					</div>
 					<div className="buttons">
-						<button
-							className="play"
-							onClick={() => dispatch({ type: 'OPEN_YOUTUBE_MODAL' })}
-						>
+						<button className="play" onClick={handlePlayTrailer}>
 							<PlayArrow />
 							<span>Play</span>
 						</button>
@@ -128,8 +140,19 @@ export default function Featured({ type, handleChange }) {
 					</div>
 				</div>
 			</div>
-			{isYoutubeModalOpen && (
-				<Modal id={content?.id} moviesOrSeries={moviesOrSeries} />
+			{isYoutubeModalOpen && isFeaturedTrailerClosed && (
+				<Modal
+					id={trailerKey ? trailerKey : content?.id}
+					moviesOrSeries={moviesOrSeries}
+					setIsFeaturedTrailerClosed={setIsFeaturedTrailerClosed}
+				/>
+			)}
+			{isYoutubeModalOpen && !isListItemTrailerClosed && (
+				<Modal
+					id={trailerKey ? trailerKey : content?.id}
+					moviesOrSeries={moviesOrSeries}
+					setIsListItemTrailerClosed={setIsListItemTrailerClosed}
+				/>
 			)}
 		</>
 	);

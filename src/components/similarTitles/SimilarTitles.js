@@ -3,6 +3,7 @@ import axios from 'axios';
 import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { useModalContext } from '../../context/modalContext/ModalContext';
 import AboutMovie from '../aboutMovie/AboutMovie';
@@ -10,26 +11,28 @@ import AboutMovie from '../aboutMovie/AboutMovie';
 import './similarTitle.scss';
 
 const SimilarTitles = ({
-	movie,
+	// movie,
 	handleSimilarTitleTrailer,
 	expandedMovieData,
 }) => {
 	const [similarTitles, setSimilarTitles] = useState([]);
 	const { dispatch } = useModalContext();
-	const { movieOrSeries } = useParams();
-	const formattedUrl = movieOrSeries === 'movies' ? 'movie' : 'tv';
+	const { pathname } = useLocation();
+	const isMovie = pathname.startsWith('/movies') && true;
+
+	const formattedUrl = pathname.startsWith('/movies') ? 'movie' : 'tv';
 
 	useEffect(() => {
 		const getSimilarTitles = async () => {
 			const res = await axios.get(
-				`https://api.themoviedb.org/3/${formattedUrl}/${movie.id}?api_key=${process.env.REACT_APP_TMDB_MOVIE_API}&append_to_response=release_dates,credits,recommendations`
+				`https://api.themoviedb.org/3/${formattedUrl}/${expandedMovieData.id}?api_key=${process.env.REACT_APP_TMDB_MOVIE_API}&append_to_response=release_dates,credits,recommendations`
 			);
 
 			console.log(res.data);
 			setSimilarTitles(res.data.recommendations.results);
 		};
 		getSimilarTitles();
-	}, [movie.id]);
+	}, [expandedMovieData.id, formattedUrl]);
 
 	const handleClick = async (id) => {
 		dispatch({ type: 'OPEN_YOUTUBE_MODAL' });
@@ -51,20 +54,19 @@ const SimilarTitles = ({
 							/>
 							<div className="info">
 								<h3>
-									{movieOrSeries === 'movies' && similarTitle.original_title}
-									{movieOrSeries === 'series' && similarTitle.original_name}
+									{isMovie && similarTitle.original_title}
+									{!isMovie && similarTitle.original_name}
 								</h3>
 								<div className="">
 									<span className="rating">
-										Rating: {similarTitle.vote_average}
+										Rating: {similarTitle.vote_average.toFixed(1)}
 									</span>
 									<span className="year">
-										{movieOrSeries === 'movies' &&
-											new Date(similarTitle.released_date).getFullYear()}
-										{movieOrSeries === 'series' &&
+										{isMovie &&
+											new Date(similarTitle.release_date).getFullYear()}
+										{!isMovie &&
 											new Date(similarTitle.first_air_date).getFullYear()}
 									</span>
-									{/* <span className="duration">1 h 35 min.</span> */}
 								</div>
 							</div>
 						</div>
