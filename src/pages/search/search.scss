@@ -1,0 +1,28 @@
+.search-page {
+	.search-container {
+		max-width: 1400px;
+		margin: 0 auto;
+		padding: 0 1rem;
+		margin-top: 125px;
+		.search-title {
+			display: flex;
+			align-items: center;
+			.search-icon {
+				font-size: 2rem;
+				margin-right: 10px;
+			}
+		}
+
+		.grid {
+			display: grid;
+			grid-template-columns: repeat(5, 1fr);
+			align-items: center;
+			justify-content: center;
+			img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+		}
+	}
+}

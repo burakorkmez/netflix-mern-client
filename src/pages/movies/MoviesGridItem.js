@@ -6,7 +6,6 @@ import {
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
 import { useModalContext } from '../../context/modalContext/ModalContext';
 import { formatDuration } from '../../functions/formatDuration';
 import { genresMovie } from '../../helpers/genres';
@@ -18,7 +17,7 @@ const MoviesGridItem = ({ movie, handleSetMovie }) => {
 	const { pathname } = useLocation();
 
 	const fortmattedUrl = pathname.startsWith('/movies') ? 'movie' : 'tv';
-	const isMovie = pathname.startsWith('movies');
+	const isMovie = pathname.startsWith('/movies');
 
 	useEffect(() => {
 		const getDurationAndCasts = async () => {
@@ -52,6 +51,7 @@ const MoviesGridItem = ({ movie, handleSetMovie }) => {
 		handleSetMovie(movie, duration, expandedMovieData);
 	};
 
+	if (!movie.backdrop_path) return null;
 	return (
 		<>
 			<div className="grid-item">

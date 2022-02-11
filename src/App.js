@@ -8,6 +8,7 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { useState, useContext } from 'react';
 import { AuthContext } from './context/authContext/AuthContext';
 import Movies from './pages/movies/Movies';
+import Search from './pages/search/Search';
 
 function App() {
 	const { user } = useContext(AuthContext);
@@ -57,6 +58,11 @@ function App() {
 				<Route exact path="/:movieOrSeries/:genre">
 					{user ? <Movies /> : <Redirect to="/login" />}
 				</Route>
+
+				<Route exact path="/:movieOrSeries/search/:genre">
+					{user ? <Search /> : <Redirect to="/login" />}
+				</Route>
+
 				<Route path="/watch">
 					{user ? <Watch /> : <Redirect to="/login" />}
 				</Route>

@@ -84,6 +84,7 @@ const Movies = () => {
 		setDuration(duration);
 		setExpandedMovieData(expandedMovieData);
 	};
+
 	return (
 		<>
 			<Navbar />

@@ -1,12 +1,16 @@
 import { ArrowDropDown, Notifications } from '@material-ui/icons';
 import { useContext, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Link, NavLink } from 'react-router-dom';
 import { AuthContext } from '../../context/authContext/AuthContext';
 import './navbar.scss';
 
-const Navbar = () => {
+const Navbar = ({ handleSearchQuery }) => {
 	const [isScrolled, setIsScrolled] = useState(false);
 	const { dispatch, user } = useContext(AuthContext);
+
+	const { pathname } = useLocation();
+	const isSearchPage = pathname.includes('/search');
 
 	window.onscroll = () => {
 		setIsScrolled(window.pageYOffset === 0 ? false : true);
@@ -15,6 +19,11 @@ const Navbar = () => {
 
 	const handleClick = () => {
 		dispatch({ type: 'LOGOUT' });
+	};
+
+	// send query to Search.js
+	const handleChange = (e) => {
+		handleSearchQuery(e.target.value);
 	};
 
 	return (
@@ -33,7 +42,15 @@ const Navbar = () => {
 					</NavLink>
 				</div>
 				<div className="right">
-					<Notifications className="icon" />
+					{isSearchPage && (
+						<div class="input-container">
+							<div class="search-box">
+								<input type="text" onChange={handleChange} />
+								<span></span>
+							</div>
+						</div>
+					)}
+					{/* <Notifications className="icon" /> */}
 					<Link to="/profile">
 						<img
 							src={`${
