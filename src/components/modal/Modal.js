@@ -9,14 +9,17 @@ import { useModalContext } from '../../context/modalContext/ModalContext';
 import { useParams } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
-const Modal = ({ id, setCloseFeaturedTrailer, setIsListItemTrailerClosed }) => {
+const Modal = ({
+	id,
+	setIsFeaturedTrailerClosed,
+	setIsListItemTrailerClosed,
+}) => {
 	const [trailers, setTrailers] = useState([]);
 	const [currentTrailer, setCurrentTrailer] = useState(0);
 	const { dispatch } = useModalContext();
 
 	const { pathname } = useLocation();
 	const formattedUrl = pathname.startsWith('/movies') ? 'movie' : 'tv';
-	console.log(pathname);
 	const opts = {
 		height: '550',
 		width: '1100',
@@ -24,7 +27,7 @@ const Modal = ({ id, setCloseFeaturedTrailer, setIsListItemTrailerClosed }) => {
 			autoplay: 1,
 		},
 	};
-	console.log(id);
+
 	useEffect(() => {
 		const getTrailers = async () => {
 			const res = await axios.get(
@@ -35,13 +38,13 @@ const Modal = ({ id, setCloseFeaturedTrailer, setIsListItemTrailerClosed }) => {
 			setTrailers(res.data.results);
 		};
 		getTrailers();
-	}, []);
+	}, [formattedUrl, id]);
 
 	useEffect(() => {
 		const close = (e) => {
 			if (e.keyCode === 27) {
 				dispatch({ type: 'CLOSE_YOUTUBE_MODAL' });
-				if (setCloseFeaturedTrailer) setCloseFeaturedTrailer(true);
+				if (setIsFeaturedTrailerClosed) setIsFeaturedTrailerClosed(true);
 				if (setIsListItemTrailerClosed) setIsListItemTrailerClosed(true);
 			}
 		};
@@ -52,7 +55,7 @@ const Modal = ({ id, setCloseFeaturedTrailer, setIsListItemTrailerClosed }) => {
 	const handleClick = (e) => {
 		e.stopPropagation();
 		dispatch({ type: 'CLOSE_YOUTUBE_MODAL' });
-		if (setCloseFeaturedTrailer) setCloseFeaturedTrailer(true);
+		if (setIsFeaturedTrailerClosed) setIsFeaturedTrailerClosed(true);
 		if (setIsListItemTrailerClosed) setIsListItemTrailerClosed(true);
 	};
 

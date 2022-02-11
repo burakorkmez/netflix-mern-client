@@ -4,17 +4,17 @@ import './aboutMovie.scss';
 const AboutMovie = ({ expandedMovieData }) => {
 	const { pathname } = useLocation();
 	const isMovie = pathname.startsWith('/movies') && true;
-	const director = expandedMovieData.credits.crew.find(
+	const director = expandedMovieData?.credits.crew.find(
 		(member) => member.job === 'Director'
 	);
-	const casts = expandedMovieData.credits.cast.slice(0, 10);
+	const casts = expandedMovieData?.credits.cast.slice(0, 10);
 	return (
 		<div className="about-movie" id="about">
 			<h3 className="title">
 				About{' '}
 				<span>
-					{isMovie && expandedMovieData.original_title}
-					{!isMovie && expandedMovieData.original_name}
+					{isMovie && expandedMovieData?.original_title}
+					{!isMovie && expandedMovieData?.original_name}
 				</span>
 			</h3>
 			{director && (
@@ -31,25 +31,25 @@ const AboutMovie = ({ expandedMovieData }) => {
 			</p>
 			<p>
 				<span>Cast: </span>
-				{casts.map((cast, i) => (
+				{casts?.map((cast, i) => (
 					<span className="about-movie-value">{cast.name}</span>
 				))}
 			</p>
 			<p>
 				<span>Genres: </span>
-				{expandedMovieData.genres.map((genre, i) => (
+				{expandedMovieData?.genres.map((genre, i) => (
 					<span className="about-movie-value">{genre.name}</span>
 				))}
 			</p>
 			<p>
 				<span>Status: </span>
-				<span className="about-movie-value">{expandedMovieData.status}</span>
+				<span className="about-movie-value">{expandedMovieData?.status}</span>
 			</p>
 			<p>
 				<span>Release Date: </span>
 				<span className="about-movie-value">
-					{isMovie && expandedMovieData.release_date}
-					{!isMovie && expandedMovieData.first_air_date}
+					{isMovie && expandedMovieData?.release_date}
+					{!isMovie && expandedMovieData?.first_air_date}
 				</span>
 			</p>
 		</div>

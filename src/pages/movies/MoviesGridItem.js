@@ -17,7 +17,6 @@ const MoviesGridItem = ({ movie, handleSetMovie }) => {
 	const { movieOrSeries } = useParams();
 
 	const fortmatedUrl = movieOrSeries === 'movies' ? 'movie' : 'tv';
-	// console.log(movie);
 	useEffect(() => {
 		const getDurationAndCasts = async () => {
 			const res = await axios.get(

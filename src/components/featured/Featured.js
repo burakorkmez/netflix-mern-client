@@ -72,7 +72,7 @@ export default function Featured({
 		setIsFeaturedTrailerClosed(false);
 		dispatch({ type: 'OPEN_YOUTUBE_MODAL' });
 	};
-
+	console.log(content);
 	return (
 		<>
 			<div className="featured">
@@ -140,7 +140,7 @@ export default function Featured({
 					</div>
 				</div>
 			</div>
-			{isYoutubeModalOpen && isFeaturedTrailerClosed && (
+			{isYoutubeModalOpen && !isFeaturedTrailerClosed && (
 				<Modal
 					id={trailerKey ? trailerKey : content?.id}
 					moviesOrSeries={moviesOrSeries}

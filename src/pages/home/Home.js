@@ -16,7 +16,7 @@ const Home = ({ type, handleChange }) => {
 	const [expandedMovieData, setExpandedMovieData] = useState(null);
 
 	const [isFeaturedTrailerClosed, setIsFeaturedTrailerClosed] = useState(true);
-	const [isListItemTrailerClosed, setIsListItemTrailerClosed] = useState(false);
+	const [isListItemTrailerClosed, setIsListItemTrailerClosed] = useState(true);
 
 	const { isInfoModalOpen, dispatch } = useModalContext();
 
@@ -39,8 +39,8 @@ const Home = ({ type, handleChange }) => {
 		const res = await axios.get(
 			`https://api.themoviedb.org/3/${formattedUrl}/${movie.id}?api_key=${process.env.REACT_APP_TMDB_MOVIE_API}&language=en-US&append_to_response=credits`
 		);
-		setExpandedMovieData(res.data);
 		dispatch({ type: 'OPEN_INFO_MODAL' });
+		setExpandedMovieData(res.data);
 	};
 	console.log(expandedMovieData);
 	return (
@@ -72,7 +72,7 @@ const Home = ({ type, handleChange }) => {
 				<InfoModal
 					movie={movie && movie}
 					duration={expandedMovieData && expandedMovieData.runtime}
-					expandedMovieData={expandedMovieData && expandedMovieData}
+					expandedMovieData={expandedMovieData}
 				/>
 			)}
 		</div>
