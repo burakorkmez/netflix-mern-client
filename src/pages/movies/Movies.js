@@ -1,16 +1,16 @@
-import { ArrowBack } from '@material-ui/icons';
 import axios from 'axios';
-import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import { useLocation } from 'react-router-dom';
 import InfoModal from '../../components/modal/InfoModal';
 import Navbar from '../../components/navbar/Navbar';
 import { useModalContext } from '../../context/modalContext/ModalContext';
 import { genresMovie, genresSeries } from '../../helpers/genres';
-import './movies.scss';
 import MoviesGridItem from './MoviesGridItem';
+
+import './movies.scss';
+import { ArrowBack } from '@material-ui/icons';
 
 const Movies = () => {
 	const [movies, setMovies] = useState([]);
@@ -30,7 +30,7 @@ const Movies = () => {
 	const searchedGenre = isMovie
 		? genresMovie.find((g) => g.name.toLowerCase() === genre.toLowerCase())
 		: genresSeries.find((g) => g.name.toLowerCase() === genre.toLowerCase());
-	console.log(searchedGenre);
+
 	const formattedUrl = movieOrSeries === 'movies' ? 'movie' : 'tv';
 
 	// add open-modal class to body
@@ -46,18 +46,20 @@ const Movies = () => {
 			setMovies((prev) => [...prev, ...res.data.results]);
 		};
 		getMovies();
-	}, [searchedGenre.id, page, formattedUrl]);
+	}, [searchedGenre?.id, page, formattedUrl]);
 	console.log(movie);
 
-	const increasePageNum = () => {
+	const increasePageNum = (e) => {
 		// check if scrolled to the bottom of the page
+
 		if (
-			window.innerHeight + document.documentElement.scrollTop >=
-			document.body.offsetHeight
+			window.innerHeight + e.target.documentElement.scrollTop + 1 >=
+			e.target.documentElement.scrollHeight
 		) {
 			setPage((prev) => prev + 1);
 		}
 	};
+	console.log(page);
 
 	useEffect(() => {
 		// set up

@@ -52,6 +52,7 @@ const MoviesGridItem = ({ movie, handleSetMovie }) => {
 	};
 
 	if (!movie.backdrop_path) return null;
+
 	return (
 		<>
 			<div className="grid-item">

@@ -73,21 +73,6 @@ export default function Featured({
 	return (
 		<>
 			<div className="featured">
-				{type && (
-					<div className="category">
-						<span>{type === 'movie' ? 'Movies' : 'Series'}</span>
-						<select
-							name="genre"
-							id="genre"
-							onChange={(e) => handleChange(e.target.value)}
-						>
-							<option value="">Genre</option>
-							<option value="Action">Action</option>
-							<option value="Comedy">Comedy</option>
-							<option value="crime">Crime</option>
-						</select>
-					</div>
-				)}
 				<img
 					src={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`}
 					className="featuredImg"

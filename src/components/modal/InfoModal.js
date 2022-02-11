@@ -15,7 +15,7 @@ const InfoModal = ({ movie, duration, expandedMovieData }) => {
 	const { dispatch, isYoutubeModalOpen } = useModalContext();
 	const { pathname } = useLocation();
 	const isMovie = pathname.startsWith('/movies') && true;
-	// log;
+
 	useEffect(() => {
 		const close = (e) => {
 			if (e.keyCode === 27) {
@@ -24,7 +24,7 @@ const InfoModal = ({ movie, duration, expandedMovieData }) => {
 		};
 		window.addEventListener('keydown', close);
 		return () => window.removeEventListener('keydown', close);
-	}, []);
+	}, [dispatch]);
 
 	const handleClick = () => {
 		dispatch({ type: 'OPEN_YOUTUBE_MODAL' });

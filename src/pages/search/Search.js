@@ -7,10 +7,16 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import useDebounce from '../../hooks/useDebounce';
 import MoviesGridItem from '../movies/MoviesGridItem';
+import Modal from '../../components/modal/Modal';
+import { useModalContext } from '../../context/modalContext/ModalContext';
 
 const Search = () => {
 	const [query, setQuery] = useState('');
 	const [searchedResults, setSearchedResults] = useState([]);
+	const [expandedMovieData, setExpandedMovieData] = useState([]);
+	const [duration, setDuration] = useState(null);
+
+	const { isYoutubeModalOpen, dispatch } = useModalContext();
 
 	const { pathname } = useLocation();
 	const isMovie = pathname.includes('movie') ? 'movie' : 'tv';
@@ -31,8 +37,13 @@ const Search = () => {
 	const debounce = useDebounce();
 
 	const handleSearchQuery = (query) => {
-		if (query === '') return setSearchedResults([]);
+		if (query === '') setSearchedResults([]);
 		debounce(() => setQuery(query), 500);
+	};
+
+	const handleSetMovie = (undefined, duration, expandedMovieData) => {
+		setExpandedMovieData(expandedMovieData);
+		setDuration(duration);
 	};
 
 	return (
@@ -41,14 +52,22 @@ const Search = () => {
 			<div className="search-container">
 				<div className="search-title">
 					<SearchOutlined className="search-icon" />
-					<h1>{isMovie}</h1>
+					{isMovie === 'movie' && <h1>{isMovie.toUpperCase() + 'S'}</h1>}
+					{isMovie === 'tv' && <h1>{isMovie.toUpperCase() + ' SERIES'}</h1>}
 				</div>
 
 				<div className="grid">
 					{searchedResults &&
-						searchedResults.map((movie) => <MoviesGridItem movie={movie} />)}
+						searchedResults.map((movie) => (
+							<MoviesGridItem
+								movie={movie}
+								key={movie.id}
+								handleSetMovie={handleSetMovie}
+							/>
+						))}
 				</div>
 			</div>
+			{isYoutubeModalOpen && <Modal id={expandedMovieData?.id} />}
 		</div>
 	);
 };
