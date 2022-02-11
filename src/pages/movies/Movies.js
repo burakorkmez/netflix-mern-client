@@ -4,10 +4,11 @@ import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import InfoModal from '../../components/modal/InfoModal';
 import Navbar from '../../components/navbar/Navbar';
 import { useModalContext } from '../../context/modalContext/ModalContext';
-import { genresMovie } from '../../helpers/genres';
+import { genresMovie, genresSeries } from '../../helpers/genres';
 import './movies.scss';
 import MoviesGridItem from './MoviesGridItem';
 
@@ -18,13 +19,17 @@ const Movies = () => {
 	const [duration, setDuration] = useState(null);
 	const [page, setPage] = useState(1);
 
+	const { pathname } = useLocation();
+
+	const isMovie = pathname.startsWith('/movies');
+
 	const { isInfoModalOpen } = useModalContext();
 
 	const { movieOrSeries, genre } = useParams();
 
-	const searchedGenre = genresMovie.find(
-		(g) => g.name.toLowerCase() === genre.toLowerCase()
-	);
+	const searchedGenre = isMovie
+		? genresMovie.find((g) => g.name.toLowerCase() === genre.toLowerCase())
+		: genresSeries.find((g) => g.name.toLowerCase() === genre.toLowerCase());
 	console.log(searchedGenre);
 	const formattedUrl = movieOrSeries === 'movies' ? 'movie' : 'tv';
 
@@ -96,7 +101,11 @@ const Movies = () => {
 				<div className="container grid">
 					{movies.map((movie) => (
 						<>
-							<MoviesGridItem movie={movie} handleSetMovie={handleSetMovie} />
+							<MoviesGridItem
+								movie={movie}
+								handleSetMovie={handleSetMovie}
+								key={movie.id}
+							/>
 						</>
 					))}
 				</div>

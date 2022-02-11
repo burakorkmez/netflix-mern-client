@@ -5,6 +5,7 @@ import {
 } from '@material-ui/icons';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { useModalContext } from '../../context/modalContext/ModalContext';
 import { formatDuration } from '../../functions/formatDuration';
@@ -14,19 +15,21 @@ const MoviesGridItem = ({ movie, handleSetMovie }) => {
 	const [duration, setDuration] = useState(null);
 	const [expandedMovieData, setExpandedMovieData] = useState([]);
 	const { dispatch } = useModalContext();
-	const { movieOrSeries } = useParams();
+	const { pathname } = useLocation();
 
-	const fortmatedUrl = movieOrSeries === 'movies' ? 'movie' : 'tv';
+	const fortmattedUrl = pathname.startsWith('/movies') ? 'movie' : 'tv';
+	const isMovie = pathname.startsWith('movies');
+
 	useEffect(() => {
 		const getDurationAndCasts = async () => {
 			const res = await axios.get(
-				`https://api.themoviedb.org/3/${fortmatedUrl}/${movie.id}?api_key=${process.env.REACT_APP_TMDB_MOVIE_API}&language=en-US&append_to_response=credits`
+				`https://api.themoviedb.org/3/${fortmattedUrl}/${movie.id}?api_key=${process.env.REACT_APP_TMDB_MOVIE_API}&language=en-US&append_to_response=credits`
 			);
 			setExpandedMovieData(res.data);
 			setDuration(res.data.runtime);
 		};
 		getDurationAndCasts();
-	}, [movie.id, fortmatedUrl]);
+	}, [movie.id, fortmattedUrl]);
 
 	// get genres of featured movie/series
 	const genresOfMovie = [];
@@ -63,14 +66,14 @@ const MoviesGridItem = ({ movie, handleSetMovie }) => {
 					<div className="grid-item-info-header">
 						<div>
 							<span className="grid-item-title">
-								{movieOrSeries === 'movies' &&
-									(movie?.original_title.length < 20
+								{isMovie &&
+									(movie?.original_title?.length < 20
 										? movie?.original_title
-										: movie?.original_title.substring(0, 25) + '...')}
-								{movieOrSeries === 'series' &&
-									(movie?.original_name.length < 20
+										: movie?.original_title?.substring(0, 25) + '...')}
+								{!isMovie &&
+									(movie?.original_name?.length < 20
 										? movie?.original_name
-										: movie?.original_name.substring(0, 25) + '...')}
+										: movie?.original_name?.substring(0, 25) + '...')}
 							</span>
 							<span className="grid-item-language">
 								{' '}
@@ -86,7 +89,7 @@ const MoviesGridItem = ({ movie, handleSetMovie }) => {
 					{genresOfMovie.map((genre, i) => (
 						<span className="grid-item-genres">
 							{genre}
-							{i !== genresOfMovie.length - 1 && ', '}
+							{i !== genresOfMovie?.length - 1 && ', '}
 						</span>
 					))}
 					<div className="grid-item-bottom">
@@ -97,7 +100,14 @@ const MoviesGridItem = ({ movie, handleSetMovie }) => {
 							</span>{' '}
 							<span className="grid-item-votes">{movie.vote_count} votes</span>
 						</div>
-						<div>{formatDuration(duration)}</div>
+						{isMovie && <div>{formatDuration(duration)}</div>}
+						{!isMovie && (
+							<div>
+								{expandedMovieData?.seasons?.length !== 1
+									? expandedMovieData?.seasons?.length + ' Seasons'
+									: expandedMovieData?.seasons?.length + ' Season'}
+							</div>
+						)}
 					</div>
 				</div>
 			</div>

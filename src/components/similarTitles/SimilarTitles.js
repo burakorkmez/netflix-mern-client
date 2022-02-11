@@ -4,17 +4,12 @@ import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
 import { useModalContext } from '../../context/modalContext/ModalContext';
 import AboutMovie from '../aboutMovie/AboutMovie';
 
 import './similarTitle.scss';
 
-const SimilarTitles = ({
-	// movie,
-	handleSimilarTitleTrailer,
-	expandedMovieData,
-}) => {
+const SimilarTitles = ({ handleSimilarTitleTrailer, expandedMovieData }) => {
 	const [similarTitles, setSimilarTitles] = useState([]);
 	const { dispatch } = useModalContext();
 	const { pathname } = useLocation();

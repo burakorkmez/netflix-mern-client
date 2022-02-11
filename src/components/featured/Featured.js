@@ -55,8 +55,6 @@ export default function Featured({
 		getRandomContent();
 	}, [moviesOrSeries]);
 
-	console.log(content);
-
 	// get genres of featured movie/series
 	const genresOfMovie = [];
 	content?.genre_ids.forEach((id, i) => {
@@ -72,7 +70,6 @@ export default function Featured({
 		setIsFeaturedTrailerClosed(false);
 		dispatch({ type: 'OPEN_YOUTUBE_MODAL' });
 	};
-	console.log(content);
 	return (
 		<>
 			<div className="featured">
@@ -113,12 +110,10 @@ export default function Featured({
 						</span>
 						<span className="genre">
 							{genresOfMovie.map((genre, i) => (
-								<>
-									<span>
-										{genre}
-										{i !== genresOfMovie.length - 1 && ', '}
-									</span>
-								</>
+								<span key={i}>
+									{genre}
+									{i !== genresOfMovie.length - 1 && ', '}
+								</span>
 							))}
 						</span>
 						<span className="duration">

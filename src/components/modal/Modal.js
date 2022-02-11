@@ -6,7 +6,6 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { useState } from 'react';
 import { useModalContext } from '../../context/modalContext/ModalContext';
-import { useParams } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
 const Modal = ({
