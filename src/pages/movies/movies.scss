@@ -79,6 +79,10 @@
 			transform: scale(1.5, 2);
 			z-index: 2;
 
+			@include sm {
+				transform: scale(1, 1) !important;
+			}
+
 			.icon {
 				visibility: visible;
 				opacity: 1;

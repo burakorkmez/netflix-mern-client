@@ -112,7 +112,7 @@ export default function Featured({
 							{moviesOrSeries === 'movie'
 								? formatDuration(duration)
 								: numberOfSeasons + ' Season'}
-							{numberOfSeasons !== 1 && 's'}
+							{moviesOrSeries !== 'movie' && numberOfSeasons !== 1 && 's'}
 						</span>
 					</div>
 					<div className="buttons">
