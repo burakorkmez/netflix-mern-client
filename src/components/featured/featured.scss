@@ -27,11 +27,11 @@
 		}
 
 		h1 {
-			font-size: 3rem;
+			font-size: 2.5rem;
 			text-transform: uppercase;
 			font-weight: 900;
 			@include md {
-				font-size: 2.4rem;
+				font-size: 2.2rem;
 			}
 			@include sm {
 				font-size: 2rem;
@@ -68,9 +68,6 @@
 		.desc {
 			margin: 20px 0px;
 			@include md {
-				font-size: 1rem;
-			}
-			@include sm {
 				font-size: 0.95rem;
 			}
 		}

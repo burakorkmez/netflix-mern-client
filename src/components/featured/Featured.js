@@ -6,10 +6,12 @@ import './featured.scss';
 import Modal from '../modal/Modal';
 import { useModalContext } from '../../context/modalContext/ModalContext';
 import axios from 'axios';
+import InfoModal from '../modal/InfoModal';
 
 export default function Featured({
 	type,
 	handleChange,
+	handleInfoModal,
 	trailerKey,
 	setTrailerKey,
 	isFeaturedTrailerClosed,
@@ -24,7 +26,7 @@ export default function Featured({
 		type === 'movie' ? genresMovie : genresSeries
 	);
 
-	const { isYoutubeModalOpen, dispatch } = useModalContext();
+	const { isYoutubeModalOpen, dispatch, isInfoModalOpen } = useModalContext();
 	const moviesOrSeries = type === 'movie' ? 'movie' : 'tv';
 
 	useEffect(() => {
@@ -70,6 +72,11 @@ export default function Featured({
 		setIsFeaturedTrailerClosed(false);
 		dispatch({ type: 'OPEN_YOUTUBE_MODAL' });
 	};
+	const handleInfoClick = () => {
+		dispatch({ type: 'OPEN_INFO_MODAL' });
+		handleInfoModal(content);
+	};
+
 	return (
 		<>
 			<div className="featured">
@@ -113,7 +120,7 @@ export default function Featured({
 							<PlayArrow />
 							<span>Play</span>
 						</button>
-						<button className="more">
+						<button className="more" onClick={handleInfoClick}>
 							<InfoOutlined />
 							<span>Info</span>
 						</button>
@@ -134,6 +141,9 @@ export default function Featured({
 					setIsListItemTrailerClosed={setIsListItemTrailerClosed}
 				/>
 			)}
+			{/* {isInfoModalOpen && (
+				<InfoModal duration={duration} expandedMovieData={content} />
+			)} */}
 		</>
 	);
 }

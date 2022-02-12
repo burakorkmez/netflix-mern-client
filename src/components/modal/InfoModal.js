@@ -10,7 +10,7 @@ import './infoModal.scss';
 import Modal from './Modal';
 
 const InfoModal = ({ duration, expandedMovieData }) => {
-	console.log(expandedMovieData);
+	console.log(expandedMovieData?.backdrop_path);
 	const genresOfMovie = getGenresOfMovie(expandedMovieData);
 	console.log(genresOfMovie);
 	const [similarTitleTrailer, setSimilarTitleTrailer] = useState(null);
@@ -112,7 +112,7 @@ const InfoModal = ({ duration, expandedMovieData }) => {
 								</div>
 								<div>
 									<span>Casts: </span>
-									{expandedMovieData?.credits.cast
+									{expandedMovieData?.credits?.cast
 										.slice(0, 4)
 										.map((cast, i) => (
 											<b className="cast-name">{cast.name}</b>
@@ -127,7 +127,7 @@ const InfoModal = ({ duration, expandedMovieData }) => {
 				</div>
 				<SimilarTitles
 					handleSimilarTitleTrailer={handleSimilarTitleTrailer}
-					expandedMovieData={expandedMovieData}
+					expandedMovieData={expandedMovieData && expandedMovieData}
 				/>
 			</div>
 		</div>

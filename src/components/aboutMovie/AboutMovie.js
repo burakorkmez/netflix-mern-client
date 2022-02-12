@@ -4,10 +4,10 @@ import './aboutMovie.scss';
 const AboutMovie = ({ expandedMovieData }) => {
 	const { pathname } = useLocation();
 	const isMovie = pathname.startsWith('/movies') && true;
-	const director = expandedMovieData?.credits.crew.find(
+	const director = expandedMovieData?.credits?.crew?.find(
 		(member) => member.job === 'Director'
 	);
-	const casts = expandedMovieData?.credits.cast.slice(0, 10);
+	const casts = expandedMovieData?.credits?.cast?.slice(0, 10);
 	return (
 		<div className="about-movie" id="about">
 			<h3 className="title">
@@ -25,7 +25,7 @@ const AboutMovie = ({ expandedMovieData }) => {
 			)}
 			<p>
 				<span>Production Companies: </span>
-				{expandedMovieData?.production_companies.map((company, i) => (
+				{expandedMovieData?.production_companies?.map((company, i) => (
 					<span className="about-movie-value">{company.name}</span>
 				))}
 			</p>

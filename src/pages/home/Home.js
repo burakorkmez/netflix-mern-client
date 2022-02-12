@@ -35,7 +35,7 @@ const Home = ({ type, handleChange }) => {
 	const formattedUrl = pathname === '/movies' ? 'movie' : 'tv';
 
 	const handleInfoModal = async (movie) => {
-		setMovie(movie);
+		// setMovie(movie);
 		const res = await axios.get(
 			`https://api.themoviedb.org/3/${formattedUrl}/${movie.id}?api_key=${process.env.REACT_APP_TMDB_MOVIE_API}&language=en-US&append_to_response=credits`
 		);
@@ -55,6 +55,7 @@ const Home = ({ type, handleChange }) => {
 				handleChange={handleChange}
 				trailerKey={trailerKey}
 				setTrailerKey={setTrailerKey}
+				handleInfoModal={handleInfoModal}
 			/>
 
 			{genres?.map((genre) => (
