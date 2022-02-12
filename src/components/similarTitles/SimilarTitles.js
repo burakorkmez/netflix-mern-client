@@ -34,59 +34,61 @@ const SimilarTitles = ({ handleSimilarTitleTrailer, expandedMovieData }) => {
 		handleSimilarTitleTrailer(id);
 	};
 
-	console.log(expandedMovieData);
 	return (
 		<>
 			<h1 style={{ padding: '0 3rem' }}>Similar Titles</h1>
 			<div className="similar-title-wrapper">
 				{similarTitles &&
-					similarTitles.map((similarTitle) => (
-						<div className="similar-title-item">
-							<div class="img-wrapper">
-								<div class="img-overlay"></div>
-								<img
-									src={`https://image.tmdb.org/t/p/original/${similarTitle.backdrop_path}`}
-									alt=""
-								/>
-								<div className="info">
-									<h3>
-										{isMovie && similarTitle.original_title}
-										{!isMovie && similarTitle.original_name}
-									</h3>
-									<div className="">
-										<span className="rating">
-											Rating: {similarTitle.vote_average.toFixed(1)}
-										</span>
-										<span className="year">
-											{isMovie &&
-												new Date(similarTitle.release_date).getFullYear()}
-											{!isMovie &&
-												new Date(similarTitle.first_air_date).getFullYear()}
-										</span>
+					similarTitles.map((similarTitle) => {
+						if (!similarTitle.backdrop_path) return null;
+						return (
+							<div className="similar-title-item">
+								<div class="img-wrapper">
+									<div class="img-overlay"></div>
+									<img
+										src={`https://image.tmdb.org/t/p/original/${similarTitle.backdrop_path}`}
+										alt=""
+									/>
+									<div className="info">
+										<h3>
+											{isMovie && similarTitle.original_title}
+											{!isMovie && similarTitle.original_name}
+										</h3>
+										<div className="">
+											<span className="rating">
+												Rating: {similarTitle.vote_average.toFixed(1)}
+											</span>
+											<span className="year">
+												{isMovie &&
+													new Date(similarTitle.release_date).getFullYear()}
+												{!isMovie &&
+													new Date(similarTitle.first_air_date).getFullYear()}
+											</span>
+										</div>
+									</div>
+								</div>
+								<div className="similar-title-overview">
+									<div className="similar-title-buttons">
+										<div className="movie-btn-wrapper">
+											<button
+												className="play"
+												onClick={() => handleClick(similarTitle.id)}
+											>
+												<PlayArrow />
+												<span>Play</span>
+											</button>
+											<AddCircleOutline className="icon" />
+										</div>
+										<p>
+											{similarTitle.overview.length < 300
+												? similarTitle.overview
+												: similarTitle.overview.slice(0, 300) + '...'}
+										</p>
 									</div>
 								</div>
 							</div>
-							<div className="similar-title-overview">
-								<div className="similar-title-buttons">
-									<div className="movie-btn-wrapper">
-										<button
-											className="play"
-											onClick={() => handleClick(similarTitle.id)}
-										>
-											<PlayArrow />
-											<span>Play</span>
-										</button>
-										<AddCircleOutline className="icon" />
-									</div>
-									<p>
-										{similarTitle.overview.length < 300
-											? similarTitle.overview
-											: similarTitle.overview.slice(0, 300) + '...'}
-									</p>
-								</div>
-							</div>
-						</div>
-					))}
+						);
+					})}
 			</div>
 			<AboutMovie expandedMovieData={expandedMovieData && expandedMovieData} />
 		</>

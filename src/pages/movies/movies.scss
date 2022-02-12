@@ -12,6 +12,11 @@
 		align-items: center;
 		margin-top: 125px;
 		margin-bottom: 1rem;
+		h1 {
+			@include sm {
+				font-size: 1.6rem;
+			}
+		}
 		.back-icon {
 			margin-right: 0.5rem;
 			font-size: 1.6rem;
@@ -93,6 +98,53 @@
 		}
 		&:hover:nth-child(5n) {
 			transform: scale(1.5, 2) translateX(-40px);
+		}
+
+		// grid item responsive animations for each size
+		@include xl {
+			&:hover:nth-child(5n + 1) {
+				transform: scale(1.5, 2) translateX(0px);
+			}
+			&:hover:nth-child(5n) {
+				transform: scale(1.5, 2) translateX(0px);
+			}
+
+			&:hover:nth-child(4n + 1) {
+				transform: scale(1.5, 2) translateX(40px);
+			}
+			&:hover:nth-child(4n) {
+				transform: scale(1.5, 2) translateX(-40px);
+			}
+		}
+
+		@include lg {
+			&:hover:nth-child(4n + 1) {
+				transform: scale(1.5, 2) translateX(0px);
+			}
+			&:hover:nth-child(4n) {
+				transform: scale(1.5, 2) translateX(0px);
+			}
+
+			&:hover:nth-child(5n + 1) {
+				transform: scale(1.5, 2) translateX(0px);
+			}
+			&:hover:nth-child(5n) {
+				transform: scale(1.5, 2) translateX(0px);
+			}
+			&:hover:nth-child(3n + 1) {
+				transform: scale(1.5, 1.8) translateX(40px);
+			}
+			&:hover:nth-child(3n) {
+				transform: scale(1.5, 1.8) translateX(-40px);
+			}
+		}
+		@include md {
+			&:hover:nth-child(2n + 1) {
+				transform: scale(1.2, 1.6) translateX(20px);
+			}
+			&:hover:nth-child(2n) {
+				transform: scale(1.2, 1.6) translateX(-20px);
+			}
 		}
 
 		.grid-item-info {

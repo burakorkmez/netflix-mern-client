@@ -8,6 +8,7 @@ import axios from 'axios';
 import useDebounce from '../../hooks/useDebounce';
 import MoviesGridItem from '../movies/MoviesGridItem';
 import Modal from '../../components/modal/Modal';
+import InfoModal from '../../components/modal/InfoModal';
 import { useModalContext } from '../../context/modalContext/ModalContext';
 
 const Search = () => {
@@ -16,7 +17,7 @@ const Search = () => {
 	const [expandedMovieData, setExpandedMovieData] = useState([]);
 	const [duration, setDuration] = useState(null);
 
-	const { isYoutubeModalOpen, dispatch } = useModalContext();
+	const { isYoutubeModalOpen, isInfoModalOpen } = useModalContext();
 
 	const { pathname } = useLocation();
 	const isMovie = pathname.includes('movie') ? 'movie' : 'tv';
@@ -68,6 +69,12 @@ const Search = () => {
 				</div>
 			</div>
 			{isYoutubeModalOpen && <Modal id={expandedMovieData?.id} />}
+			{isInfoModalOpen && (
+				<InfoModal
+					duration={expandedMovieData && expandedMovieData.runtime}
+					expandedMovieData={expandedMovieData}
+				/>
+			)}
 		</div>
 	);
 };

@@ -1,3 +1,5 @@
+@import '../../breakpoints';
+
 .list {
 	position: relative;
 	width: 100%;
@@ -13,9 +15,11 @@
 		font-weight: 500;
 		margin: 20px 10px 20px 0;
 		text-transform: uppercase;
+
 		span {
 			cursor: pointer;
 		}
+
 		.list-title-wrapper {
 			cursor: pointer;
 			align-items: center;
@@ -121,6 +125,11 @@
 		text-transform: uppercase;
 		margin-bottom: 10px;
 		width: 100%;
+		@include sm {
+			margin-bottom: 5px;
+			font-size: 1.2rem;
+			font-weight: 900;
+		}
 	}
 
 	.icons {
@@ -133,6 +142,10 @@
 			margin-bottom: 10px;
 			cursor: pointer;
 			font-size: 2rem;
+			@include sm {
+				margin-bottom: 0px;
+				font-size: 1.6rem;
+			}
 		}
 	}
 	.movieYear,

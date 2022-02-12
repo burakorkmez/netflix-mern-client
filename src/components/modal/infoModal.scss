@@ -1,3 +1,5 @@
+@import '../../breakpoints';
+
 .info-modal {
 	position: fixed;
 	top: 0;
@@ -45,6 +47,10 @@
 				grid-template-columns: 1fr 1fr;
 				gap: 1rem;
 				margin-bottom: 5rem;
+
+				@include sm {
+					grid-template-columns: 1fr;
+				}
 				.flex {
 					display: flex;
 					align-items: center;
@@ -54,6 +60,10 @@
 						margin-bottom: 1.5rem;
 						font-size: 1.1rem;
 						font-weight: 900;
+						@include md {
+							margin-right: 7px;
+							font-size: 0.8rem;
+						}
 					}
 
 					.rating {
@@ -64,13 +74,26 @@
 						padding: 0.1rem;
 					}
 				}
+
 				.desc {
 					font-size: 1.3rem;
 					line-height: 1.4;
+					@include md {
+						font-size: 1rem;
+					}
 				}
+
 				.movie-info-grid-genres {
 					span {
 						color: #b0b0b0;
+					}
+
+					.genre-name,
+					.cast-name,
+					span {
+						@include md {
+							font-size: 0.9rem;
+						}
 					}
 
 					div {

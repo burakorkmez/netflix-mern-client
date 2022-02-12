@@ -1,27 +1,8 @@
+@import '../../breakpoints';
+
 .featured {
 	height: 95vh;
 	position: relative;
-
-	.category {
-		position: absolute;
-		top: 80px;
-		left: 50px;
-		font-size: 30px;
-		font-weight: 500;
-		color: white;
-		display: flex;
-		z-index: 1;
-		align-items: center;
-
-		select {
-			cursor: pointer;
-			background-color: var(--main-color);
-			border: 1px solid white;
-			color: white;
-			margin-left: 20px;
-			padding: 5px;
-		}
-	}
 
 	img {
 		width: 100%;
@@ -40,22 +21,36 @@
 		flex-direction: column;
 		padding: 3rem 1rem;
 
+		@include md {
+			left: 10px;
+			width: 100% !important;
+		}
+
 		h1 {
 			font-size: 3rem;
 			text-transform: uppercase;
 			font-weight: 900;
+			@include md {
+				font-size: 2.4rem;
+			}
+			@include sm {
+				font-size: 2rem;
+			}
 		}
 
 		.info-year-wrapper {
-			// display: flex;
-			// align-items: center;
-			// justify-content: space-between;
-			// width: 80%;
 			.year,
 			.genre,
 			.duration {
 				font-size: 1.2rem;
 				font-weight: 500;
+
+				@include md {
+					font-size: 1rem;
+				}
+				@include sm {
+					font-size: 0.9rem;
+				}
 			}
 
 			.year::after,
@@ -72,6 +67,12 @@
 
 		.desc {
 			margin: 20px 0px;
+			@include md {
+				font-size: 1rem;
+			}
+			@include sm {
+				font-size: 0.95rem;
+			}
 		}
 
 		.buttons {
@@ -91,6 +92,11 @@
 				cursor: pointer;
 				color: var(--main-color);
 				background-color: white;
+
+				@include sm {
+					font-size: 1rem;
+					padding: 5px 10px;
+				}
 
 				&.more {
 					background-color: gray;

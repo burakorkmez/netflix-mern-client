@@ -65,8 +65,8 @@ const MoviesGridItem = ({ movie, handleSetMovie }) => {
 				/>
 				<div className="grid-item-info">
 					<div className="grid-item-info-header">
-						<div>
-							<span className="grid-item-title">
+						<div className="grid-item-title">
+							<span>
 								{isMovie &&
 									(movie?.original_title?.length < 20
 										? movie?.original_title
@@ -88,7 +88,7 @@ const MoviesGridItem = ({ movie, handleSetMovie }) => {
 					</div>
 
 					{genresOfMovie.map((genre, i) => (
-						<span className="grid-item-genres">
+						<span className="grid-item-genres" key={i}>
 							{genre}
 							{i !== genresOfMovie?.length - 1 && ', '}
 						</span>

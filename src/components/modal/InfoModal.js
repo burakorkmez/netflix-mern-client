@@ -9,8 +9,10 @@ import SimilarTitles from '../similarTitles/SimilarTitles';
 import './infoModal.scss';
 import Modal from './Modal';
 
-const InfoModal = ({ movie, duration, expandedMovieData }) => {
-	const genresOfMovie = getGenresOfMovie(movie);
+const InfoModal = ({ duration, expandedMovieData }) => {
+	console.log(expandedMovieData);
+	const genresOfMovie = getGenresOfMovie(expandedMovieData);
+	console.log(genresOfMovie);
 	const [similarTitleTrailer, setSimilarTitleTrailer] = useState(null);
 	const { dispatch, isYoutubeModalOpen } = useModalContext();
 	const { pathname } = useLocation();
@@ -124,7 +126,6 @@ const InfoModal = ({ movie, duration, expandedMovieData }) => {
 					</div>
 				</div>
 				<SimilarTitles
-					movie={movie}
 					handleSimilarTitleTrailer={handleSimilarTitleTrailer}
 					expandedMovieData={expandedMovieData}
 				/>
