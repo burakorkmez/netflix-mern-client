@@ -58,6 +58,12 @@
 		transition: all 0.3s;
 		position: relative;
 
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+
 		.video-player-icon {
 			display: flex;
 			justify-content: center;
