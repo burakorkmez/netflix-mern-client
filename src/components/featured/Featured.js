@@ -6,7 +6,7 @@ import './featured.scss';
 import Modal from '../modal/Modal';
 import { useModalContext } from '../../context/modalContext/ModalContext';
 import axios from 'axios';
-import InfoModal from '../modal/InfoModal';
+import SkeletonImage from '../skeletons/SkeletonImage';
 
 export default function Featured({
 	type,
@@ -20,6 +20,7 @@ export default function Featured({
 	setIsListItemTrailerClosed,
 }) {
 	const [content, setContent] = useState(null);
+	const [isLoading, setIsLoading] = useState(true);
 	const [duration, setDuration] = useState(null);
 	const [numberOfSeasons, setNumberOfSeasons] = useState(null);
 	const [genres, setGenres] = useState(
@@ -30,15 +31,14 @@ export default function Featured({
 	const moviesOrSeries = type === 'movie' ? 'movie' : 'tv';
 
 	useEffect(() => {
+		setIsLoading(true);
 		const getRandomContent = async () => {
 			try {
 				const randomNumberForMovie = Math.floor(Math.random() * 19);
-
 				const res = await axios.get(
 					`https://api.themoviedb.org/3/${moviesOrSeries}/popular?api_key=${process.env.REACT_APP_TMDB_MOVIE_API}&language=en-US&`
 				);
 				setContent(res.data.results[randomNumberForMovie]);
-
 				if (moviesOrSeries === 'movie') {
 					const resDuration = await axios.get(
 						`https://api.themoviedb.org/3/${moviesOrSeries}/${res.data.results[randomNumberForMovie].id}?api_key=${process.env.REACT_APP_TMDB_MOVIE_API}&language=en-US`
@@ -50,7 +50,9 @@ export default function Featured({
 					);
 					setNumberOfSeasons(resSeasonNumb.data.number_of_seasons);
 				}
+				setIsLoading(false);
 			} catch (err) {
+				setIsLoading(false);
 				console.log(err);
 			}
 		};
@@ -76,6 +78,7 @@ export default function Featured({
 		dispatch({ type: 'OPEN_INFO_MODAL' });
 		handleInfoModal(content);
 	};
+	if (isLoading) return <SkeletonImage featured={true} />;
 
 	return (
 		<>

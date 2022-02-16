@@ -21,6 +21,7 @@ import { SwiperSlide } from 'swiper/react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { useModalContext } from '../../context/modalContext/ModalContext';
+import SkeletonImage from '../skeletons/SkeletonImage';
 
 // install Swiper modules
 SwiperCore.use([Pagination, Navigation]);
@@ -39,10 +40,14 @@ export default function List({
 	const formattedUrl = pathname === '/movies' ? 'movie' : 'tv';
 	useEffect(() => {
 		const getMovies = async () => {
-			const res = await axios.get(
-				`https://api.themoviedb.org/3/discover/${formattedUrl}?api_key=${process.env.REACT_APP_TMDB_MOVIE_API}&language=en-US&page=1&with_genres=${genre.id}#`
-			);
-			setMovies(res.data.results);
+			try {
+				const res = await axios.get(
+					`https://api.themoviedb.org/3/discover/${formattedUrl}?api_key=${process.env.REACT_APP_TMDB_MOVIE_API}&language=en-US&page=1&with_genres=${genre.id}#`
+				);
+				setMovies(res.data.results);
+			} catch (err) {
+				console.log(err);
+			}
 		};
 		getMovies();
 	}, [genre.id, formattedUrl]);

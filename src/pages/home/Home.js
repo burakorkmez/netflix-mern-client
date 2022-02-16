@@ -71,9 +71,8 @@ const Home = ({ type, handleChange }) => {
 
 			{isInfoModalOpen && (
 				<InfoModal
-					// movie={movie && movie}
 					duration={expandedMovieData && expandedMovieData.runtime}
-					expandedMovieData={expandedMovieData}
+					expandedMovieData={expandedMovieData && expandedMovieData}
 				/>
 			)}
 		</div>

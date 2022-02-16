@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useModalContext } from '../../context/modalContext/ModalContext';
 import AboutMovie from '../aboutMovie/AboutMovie';
+import SkeletonImage from '../skeletons/SkeletonImage';
 
 import './similarTitle.scss';
 
@@ -33,22 +34,26 @@ const SimilarTitles = ({ handleSimilarTitleTrailer, expandedMovieData }) => {
 		dispatch({ type: 'OPEN_YOUTUBE_MODAL' });
 		handleSimilarTitleTrailer(id);
 	};
+	console.log(similarTitles);
 
 	return (
 		<>
 			<h1 style={{ padding: '0 3rem' }}>Similar Titles</h1>
 			<div className="similar-title-wrapper">
 				{similarTitles &&
-					similarTitles.map((similarTitle) => {
+					similarTitles.map((similarTitle, i) => {
 						if (!similarTitle.backdrop_path) return null;
 						return (
-							<div className="similar-title-item">
+							<div className="similar-title-item" key={i}>
 								<div class="img-wrapper">
 									<div class="img-overlay"></div>
-									<img
-										src={`https://image.tmdb.org/t/p/original/${similarTitle.backdrop_path}`}
-										alt=""
-									/>
+									{similarTitle.backdrop_path && (
+										<img
+											src={`https://image.tmdb.org/t/p/original/${similarTitle.backdrop_path}`}
+											alt=""
+										/>
+									)}
+									{!similarTitle.backdrop_path && <SkeletonImage />}
 									<div className="info">
 										<h3>
 											{isMovie && similarTitle.original_title}
