@@ -84,7 +84,7 @@ export default function Featured({
 		<>
 			<div className="featured">
 				<img
-					src={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`}
+					src={`https://image.tmdb.org/t/p/original/${content.backdrop_path}`}
 					className="featuredImg"
 					alt=""
 				/>
