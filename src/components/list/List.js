@@ -96,43 +96,50 @@ export default function List({
 					},
 				}}
 			>
-				{movies.map((movie) => (
-					<>
-						<SwiperSlide key={movie.id}>
-							<img
-								src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
-								alt="movie thumbnail"
-								className="swiperImg"
-							/>
-							<div className="innerContext">
-								<p className="movieTitle">
-									{pathname === '/movies'
-										? movie.original_title
-										: movie.original_name}
-								</p>
-								<div className="icons">
-									<span onClick={() => handleTrailer(movie.id)}>
-										<PlayCircleOutlineRounded className="icon" />
-									</span>
+				{movies.map((movie) => {
+					if (!movie.backdrop_path) return null;
+					return (
+						<>
+							<SwiperSlide key={movie.id}>
+								<img
+									src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
+									alt="movie thumbnail"
+									className="swiperImg"
+								/>
+								<div className="innerContext">
+									<p className="movieTitle">
+										{pathname === '/movies'
+											? movie.original_title
+											: movie.original_name}
+									</p>
+									<div className="icons">
+										<span onClick={() => handleTrailer(movie.id)}>
+											<PlayCircleOutlineRounded className="icon" />
+										</span>
 
-									<AddCircleOutlineRounded className="icon" />
-									<InfoOutlined
-										className="icon "
-										onClick={() => handleInfoModal(movie)}
-									/>
+										<AddCircleOutlineRounded className="icon" />
+										<InfoOutlined
+											className="icon "
+											onClick={() => handleInfoModal(movie)}
+										/>
+									</div>
+									<span className="movieYear">
+										{new Date(
+											pathname === '/movies'
+												? movie.release_date
+												: movie.first_air_date
+										).getFullYear()}
+									</span>
+									<p className="movieDesc">
+										{movie.overview.length < 390
+											? movie.overview
+											: movie.overview.slice(0, 390) + '...'}
+									</p>
 								</div>
-								<span className="movieYear">
-									{new Date(
-										pathname === '/movies'
-											? movie.release_date
-											: movie.first_air_date
-									).getFullYear()}
-								</span>
-								<p className="movieDesc">{movie.overview}</p>
-							</div>
-						</SwiperSlide>
-					</>
-				))}
+							</SwiperSlide>
+						</>
+					);
+				})}
 			</Swiper>
 		</div>
 	);

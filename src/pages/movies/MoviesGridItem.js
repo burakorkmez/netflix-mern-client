@@ -52,7 +52,7 @@ const MoviesGridItem = ({ movie, handleSetMovie }) => {
 	};
 
 	if (!movie.backdrop_path) return null;
-
+	console.log(movie);
 	return (
 		<>
 			<div className="grid-item">
@@ -60,7 +60,7 @@ const MoviesGridItem = ({ movie, handleSetMovie }) => {
 					<PlayCircleFilledWhiteOutlined className="icon" />
 				</div>
 				<img
-					src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
+					src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
 					alt={movie.title + ' image'}
 				/>
 				<div className="grid-item-info">

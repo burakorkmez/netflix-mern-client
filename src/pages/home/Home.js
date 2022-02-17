@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Featured from '../../components/featured/Featured';
+import Footer from '../../components/footer/Footer';
 import List from '../../components/list/List';
 import InfoModal from '../../components/modal/InfoModal';
 import Navbar from '../../components/navbar/Navbar';
@@ -12,7 +13,6 @@ import './home.scss';
 const Home = ({ type, handleChange }) => {
 	const [genres, setGenres] = useState([]);
 	const [trailerKey, setTrailerKey] = useState(null);
-	const [movie, setMovie] = useState(null);
 	const [expandedMovieData, setExpandedMovieData] = useState(null);
 
 	const [isFeaturedTrailerClosed, setIsFeaturedTrailerClosed] = useState(true);
@@ -75,6 +75,7 @@ const Home = ({ type, handleChange }) => {
 					expandedMovieData={expandedMovieData && expandedMovieData}
 				/>
 			)}
+			<Footer />
 		</div>
 	);
 };

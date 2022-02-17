@@ -1,6 +1,6 @@
 @import '../../breakpoints';
 
-.footer {
+.footer-home {
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
 	color: #757575;
@@ -22,5 +22,31 @@
 
 	@include md {
 		grid-template-columns: 1fr 1fr;
+	}
+}
+
+.footer {
+	padding: 2rem;
+	background-color: #1b1b1b;
+	margin-top: 3rem;
+
+	.footer-container {
+		max-width: 1300px;
+		margin: 0 auto;
+		text-align: center;
+
+		.footer-author {
+			font-size: 1rem;
+			color: #ff1d2f;
+		}
+		.developed-by {
+			font-weight: 900;
+			font-size: 1.3rem;
+		}
+		.copyright {
+			color: gray;
+			font-size: 0.9rem;
+			margin-top: 0.5rem;
+		}
 	}
 }

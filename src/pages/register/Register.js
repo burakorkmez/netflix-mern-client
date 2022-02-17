@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { ArrowForwardIos } from '@material-ui/icons';
 import AnimationCard from './AnimationCard';
 import Faq from './Faq';
-import Footer from '../../components/footer/Footer';
+import Footer from '../../components/footer/FooterHome';
 import { validateEmail } from '../../functions/validateEmail';
 import { useSignup } from '../../hooks/useSignup';
 

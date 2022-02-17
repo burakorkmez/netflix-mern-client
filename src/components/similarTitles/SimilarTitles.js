@@ -47,13 +47,10 @@ const SimilarTitles = ({ handleSimilarTitleTrailer, expandedMovieData }) => {
 							<div className="similar-title-item" key={i}>
 								<div class="img-wrapper">
 									<div class="img-overlay"></div>
-									{similarTitle.backdrop_path && (
-										<img
-											src={`https://image.tmdb.org/t/p/original/${similarTitle.backdrop_path}`}
-											alt=""
-										/>
-									)}
-									{!similarTitle.backdrop_path && <SkeletonImage />}
+									<img
+										src={`https://image.tmdb.org/t/p/original/${similarTitle.backdrop_path}`}
+										alt=""
+									/>
 									<div className="info">
 										<h3>
 											{isMovie && similarTitle.original_title}

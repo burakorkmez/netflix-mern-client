@@ -11,6 +11,7 @@ import MoviesGridItem from './MoviesGridItem';
 
 import './movies.scss';
 import { ArrowBack } from '@material-ui/icons';
+import Footer from '../../components/footer/Footer';
 
 const Movies = () => {
 	const [movies, setMovies] = useState([]);

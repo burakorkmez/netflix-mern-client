@@ -27,7 +27,7 @@ export default function Featured({
 		type === 'movie' ? genresMovie : genresSeries
 	);
 
-	const { isYoutubeModalOpen, dispatch, isInfoModalOpen } = useModalContext();
+	const { isYoutubeModalOpen, dispatch } = useModalContext();
 	const moviesOrSeries = type === 'movie' ? 'movie' : 'tv';
 
 	useEffect(() => {

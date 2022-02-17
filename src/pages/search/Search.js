@@ -34,7 +34,6 @@ const Search = () => {
 		getResults();
 	}, [query, isMovie]);
 
-	console.log(searchedResults);
 	const debounce = useDebounce();
 
 	const handleSearchQuery = (query) => {
@@ -46,6 +45,7 @@ const Search = () => {
 		setExpandedMovieData(expandedMovieData);
 		setDuration(duration);
 	};
+	console.log(searchedResults);
 
 	return (
 		<div className="search-page">
@@ -66,6 +66,9 @@ const Search = () => {
 								handleSetMovie={handleSetMovie}
 							/>
 						))}
+					{searchedResults.length === 0 && (
+						<h1>No {isMovie === 'movie' ? 'movie' : 'tv series'} found</h1>
+					)}
 				</div>
 			</div>
 			{isYoutubeModalOpen && <Modal id={expandedMovieData?.id} />}

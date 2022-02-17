@@ -11,7 +11,6 @@ const useDebounce = () => {
 
 		setTypingTimeOut(timeout);
 	}
-	console.log(typingTimeOut);
 	return debounce;
 };
 
