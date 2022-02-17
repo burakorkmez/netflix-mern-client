@@ -16,11 +16,11 @@ export const useSignup = (setUsername, setEmail, emailRef) => {
 			setError(null);
 		} catch (err) {
 			setIsPending(false);
-			if (err.response.data?.err?.keyPattern?.username === 1) {
+			if (err.response.data?.keyPattern?.username === 1) {
 				setError('This username is already taken. Please use another one');
 			}
 			setUsername('');
-			if (err.response.data?.err?.keyPattern?.email === 1) {
+			if (err.response.data?.keyPattern?.email === 1) {
 				setError('This email is already taken. Please use another one');
 				setEmail('');
 			}

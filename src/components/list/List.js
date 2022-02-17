@@ -56,7 +56,6 @@ export default function List({
 		dispatch({ type: 'OPEN_YOUTUBE_MODAL' });
 		setIsListItemTrailerClosed(false);
 		getTrailerKey(id);
-		console.log(id);
 	};
 
 	return (

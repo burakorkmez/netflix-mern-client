@@ -48,11 +48,9 @@ const Movies = () => {
 		};
 		getMovies();
 	}, [searchedGenre?.id, page, formattedUrl]);
-	console.log(movie);
 
 	const increasePageNum = (e) => {
 		// check if scrolled to the bottom of the page
-
 		if (
 			window.innerHeight + e.target.documentElement.scrollTop + 1 >=
 			e.target.documentElement.scrollHeight
@@ -60,7 +58,6 @@ const Movies = () => {
 			setPage((prev) => prev + 1);
 		}
 	};
-	console.log(page);
 
 	useEffect(() => {
 		// set up

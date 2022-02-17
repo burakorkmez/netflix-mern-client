@@ -24,7 +24,6 @@ const SimilarTitles = ({ handleSimilarTitleTrailer, expandedMovieData }) => {
 				`https://api.themoviedb.org/3/${formattedUrl}/${expandedMovieData?.id}?api_key=${process.env.REACT_APP_TMDB_MOVIE_API}&append_to_response=release_dates,credits,recommendations`
 			);
 
-			console.log(res.data);
 			setSimilarTitles(res.data.recommendations.results);
 		};
 		getSimilarTitles();
@@ -34,7 +33,6 @@ const SimilarTitles = ({ handleSimilarTitleTrailer, expandedMovieData }) => {
 		dispatch({ type: 'OPEN_YOUTUBE_MODAL' });
 		handleSimilarTitleTrailer(id);
 	};
-	console.log(similarTitles);
 
 	return (
 		<>

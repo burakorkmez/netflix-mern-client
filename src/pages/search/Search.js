@@ -45,7 +45,6 @@ const Search = () => {
 		setExpandedMovieData(expandedMovieData);
 		setDuration(duration);
 	};
-	console.log(searchedResults);
 
 	return (
 		<div className="search-page">

@@ -32,7 +32,6 @@ export const signupCall = async (dispatch, email, username, password) => {
 		dispatch({ type: 'LOGIN_SUCCESS', payload: res.data });
 		return res.data;
 	} catch (err) {
-		console.log(err);
 		dispatch({ type: 'LOGIN_FAILURE', payload: 'Something went wrong' });
 		throw err;
 	}

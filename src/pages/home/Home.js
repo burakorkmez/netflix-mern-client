@@ -42,7 +42,6 @@ const Home = ({ type, handleChange }) => {
 		dispatch({ type: 'OPEN_INFO_MODAL' });
 		setExpandedMovieData(res.data);
 	};
-	console.log(expandedMovieData);
 	return (
 		<div className="home">
 			<Navbar />

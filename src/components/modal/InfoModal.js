@@ -10,9 +10,7 @@ import './infoModal.scss';
 import Modal from './Modal';
 
 const InfoModal = ({ duration, expandedMovieData }) => {
-	console.log(expandedMovieData?.backdrop_path);
 	const genresOfMovie = getGenresOfMovie(expandedMovieData);
-	console.log(genresOfMovie);
 	const [similarTitleTrailer, setSimilarTitleTrailer] = useState(null);
 	const { dispatch, isYoutubeModalOpen } = useModalContext();
 	const { pathname } = useLocation();
