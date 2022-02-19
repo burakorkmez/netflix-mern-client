@@ -40,6 +40,8 @@ export default function useProfile() {
 				json.profilePic = profilePic;
 
 				localStorage.setItem('user', JSON.stringify(json));
+
+				return res.data;
 			}
 
 			if (!isCancelled) {

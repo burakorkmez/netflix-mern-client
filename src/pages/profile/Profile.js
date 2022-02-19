@@ -73,9 +73,12 @@ export default function Profile() {
 			value = { profilePic, username, email, password };
 		}
 
-		await updateProfile(value);
-		window.location.reload();
+		const res = await updateProfile(value);
+		if (res) {
+			window.location.reload();
+		}
 	};
+	console.log(error);
 	return (
 		<section className="profile-section">
 			<Navbar />
